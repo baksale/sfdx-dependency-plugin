@@ -59,10 +59,10 @@ export default class Tree extends SfdxCommand {
     const packageId:string = this.flags.package;
     const dependencyApi = new PackageDependencyApi(this.hubOrg.getConnection());
     const dependencyBuilder = new DependencyTreeBuilder<Package2Version>(dependencyApi);
-    const dxPackage: Package2Version = dependencyApi.getPackagesByIds([packageId])[0];
-    const rootNode: DependencyTreeNode<Package2Version> = dependencyBuilder.buildDependencyTree(dxPackage);
+    const dxPackage: Package2Version = await dependencyApi.getPackagesByIds([packageId])[0];
+    const rootNode: DependencyTreeNode<Package2Version> = await dependencyBuilder.buildDependencyTree(dxPackage);
     const visitor: DependencyTreeVisitor = new DependencyTreeVisitor(new DxPackageSerializer());
-    this.ux.log(visitor.visit(rootNode));
+    this.ux.log(visitor.visitTree(rootNode));
     // Return an object to be displayed with --json
     return { dependency: 'tree'};
   }

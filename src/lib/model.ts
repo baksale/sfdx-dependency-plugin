@@ -20,7 +20,7 @@ export interface Package2Version{
     attributes: Attributes;
     Id: string;
     Package2Id: string;
-    subscriberPackageVersionId: string;
+    SubscriberPackageVersionId: string;
     Name: string;
     Package2: Package2;
     Description? : string;
