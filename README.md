@@ -22,7 +22,7 @@ $ npm install -g sfdx-dependency-plugin
 $ sfdx COMMAND
 running command...
 $ sfdx (-v|--version|version)
-sfdx-dependency-plugin/0.0.1 win32-x64 node-v12.13.0
+sfdx-dependency-plugin/0.0.2 win32-x64 node-v12.13.0
 $ sfdx --help [COMMAND]
 USAGE
   $ sfdx COMMAND
@@ -30,23 +30,19 @@ USAGE
 ```
 <!-- usagestop -->
 <!-- commands -->
-* [`sfdx hello:org [-n <string>] [-f] [-v <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-helloorg--n-string--f--v-string--u-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx sdlc:dependency:tree [name=value...] [-p <string>] [-v <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-sdlcdependencytree-namevalue--p-string--v-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
 
-## `sfdx hello:org [-n <string>] [-f] [-v <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+## `sfdx sdlc:dependency:tree [name=value...] [-p <string>] [-v <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 print a greeting and your org IDs
 
 ```
 USAGE
-  $ sfdx hello:org [-n <string>] [-f] [-v <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel 
+  $ sfdx sdlc:dependency:tree [name=value...] [-p <string>] [-v <string>] [--apiversion <string>] [--json] [--loglevel 
   trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -f, --force                                                                       example boolean flag
-  -n, --name=name                                                                   name to print
-
-  -u, --targetusername=targetusername                                               username or alias for the target
-                                                                                    org; overrides default target org
+  -p, --package=package                                                             name to print
 
   -v, --targetdevhubusername=targetdevhubusername                                   username or alias for the dev hub
                                                                                     org; overrides default dev hub org
@@ -60,12 +56,21 @@ OPTIONS
                                                                                     this command invocation
 
 EXAMPLES
-  $ sfdx hello:org --targetusername myOrg@example.com --targetdevhubusername devhub@org.com
-     Hello world! This is org: MyOrg and I will be around until Tue Mar 20 2018!
-     My hub org id is: 00Dxx000000001234
+  $ sfdx sdlc:dependency:tree --targetdevhubusername devhub@org.com --package 04t0..
+     Main Package:0
+     +- 1st Level Pacakge 1:A
+     |  +- 2nd Level Package 1:C
+     |  +- 2nd Level Package 2:D
+     |  |  - 3rd Level Package only:F
+     |  - 2nd Level Package last:E
+     +- 1st Level Pacakge 2:B
   
-  $ sfdx hello:org --name myname --targetusername myOrg@example.com
-     Hello myname! This is org: MyOrg and I will be around until Tue Mar 20 2018!
+  $ sfdx sdlc:dependency:tree -p 04tA..
+     1st Level Pacakge 1:A
+     +- 2nd Level Package 1:C
+     +- 2nd Level Package 2:D
+     |  - 3rd Level Package only:F
+     - 2nd Level Package last:E
 ```
 <!-- commandsstop -->
 <!-- debugging-your-plugin -->
