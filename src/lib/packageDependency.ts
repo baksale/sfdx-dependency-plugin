@@ -17,7 +17,7 @@ export class PackageDependencyApi implements EntityDependencyApi<Package2Version
         const result: Package2Version[] = [];
         if(packageIds.length == 0) return result;
         const packageWhereClause = this.packageVersionWhereClause.replace('%s', packageIds.join(','));
-        const packagesQuery = this.packageVersionQuery; + packageWhereClause + this.packageVersionOrderByClause;
+        const packagesQuery = this.packageVersionQuery + packageWhereClause + this.packageVersionOrderByClause;
         await this.connection.tooling.query<Package2Version>(packagesQuery)
             .then(packageQueryResult => {
                 packageQueryResult.records.forEach(packageVersion => {
@@ -36,7 +36,7 @@ export class PackageDependencyApi implements EntityDependencyApi<Package2Version
         await this.connection.tooling.query<SubscriberPackageVersion>(dependenciesQuery)
             .then(subscriberPackageVersion => {
                 subscriberPackageVersion.records.forEach(packageVersion => {
-                    packageVersion.Dependencies.ids.forEach(id =>{
+                    packageVersion.Dependencies&&packageVersion.Dependencies.ids.forEach(id =>{
                         packageDependencyIds.push('\'' + id.subscriberPackageVersionId + '\'');
                     })
                 });
