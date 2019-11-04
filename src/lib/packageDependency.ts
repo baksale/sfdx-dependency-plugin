@@ -23,6 +23,7 @@ export class PackageDependencyApi implements EntityDependencyApi<Package2Version
             if(!this.packages.has(id)) missingPackageIds.push(id);
             else result.push(this.packages.get(id));
         });
+        if(missingPackageIds.length == 0) return result;
         const packageWhereClause = this.packageVersionWhereClause.replace('%s', missingPackageIds.join(','));
         const packagesQuery = this.packageVersionQuery + packageWhereClause + this.packageVersionOrderByClause;
         await this.connection.tooling.query<Package2Version>(packagesQuery)
@@ -50,11 +51,11 @@ export class PackageDependencyApi implements EntityDependencyApi<Package2Version
                     if(packageVersion.Dependencies){
                         packageVersion.Dependencies&&packageVersion.Dependencies.ids.forEach(id =>{
                             packageDependencyIds.push('\'' + id.subscriberPackageVersionId + '\'');
-                        })
-                        this.packageToDependencyIds.set(entity.SubscriberPackageVersionId, packageDependencyIds);
+                        });                        
                     }
                 });
             });
+        this.packageToDependencyIds.set(entity.SubscriberPackageVersionId, packageDependencyIds);
         result = await this.getPackagesByIds(packageDependencyIds);
         return result;
     }
