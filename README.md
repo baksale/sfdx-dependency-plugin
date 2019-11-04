@@ -22,7 +22,7 @@ $ npm install -g sfdx-dependency-plugin
 $ sfdx COMMAND
 running command...
 $ sfdx (-v|--version|version)
-sfdx-dependency-plugin/0.0.6 win32-x64 node-v12.13.0
+sfdx-dependency-plugin/0.0.7 win32-x64 node-v12.13.0
 $ sfdx --help [COMMAND]
 USAGE
   $ sfdx COMMAND
@@ -56,7 +56,7 @@ OPTIONS
                                                                                     this command invocation
 
 EXAMPLES
-  $ sfdx sdlc:dependency:tree --targetdevhubusername devhub@org.com --package 04t0..
+  $ sfdx sdlc:dependency:tree --targetdevhubusername devhub@org.com --package '04t0..'
      Main Package:0
      +- 1st Level Pacakge 1:A
      |  +- 2nd Level Package 1:C
@@ -65,7 +65,7 @@ EXAMPLES
      |  - 2nd Level Package last:E
      +- 1st Level Pacakge 2:B
   
-  $ sfdx sdlc:dependency:tree -p 04tA..
+  $ sfdx sdlc:dependency:tree -p '04tA..'
      1st Level Pacakge 1:A
      +- 2nd Level Package 1:C
      +- 2nd Level Package 2:D
@@ -73,7 +73,7 @@ EXAMPLES
      - 2nd Level Package last:E
 ```
 
-_See code: [lib\commands\sdlc\dependency\tree.js](https://github.com/baksale/sfdx-dependency-plugin/blob/v0.0.6/lib\commands\sdlc\dependency\tree.js)_
+_See code: [lib\commands\sdlc\dependency\tree.js](https://github.com/baksale/sfdx-dependency-plugin/blob/v0.0.7/lib\commands\sdlc\dependency\tree.js)_
 <!-- commandsstop -->
 <!-- debugging-your-plugin -->
 # Debugging your plugin
