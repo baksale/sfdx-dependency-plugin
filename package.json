@@ -36,7 +36,8 @@
     "/lib",
     "/messages",
     "/npm-shrinkwrap.json",
-    "/oclif.manifest.json"
+    "/oclif.manifest.json",
+    "/bin"
   ],
   "homepage": "https://github.com/baksale/sfdx-dependency-plugin",
   "keywords": [
