@@ -20,7 +20,7 @@ export default class Tree extends SfdxCommand {
   public static description = messages.getMessage('commandDescription');
 
   public static examples = [
-  `$ sfdx sdlc:dependency:tree --targetdevhubusername devhub@org.com --package 04t0..
+  `$ sfdx sdlc:dependency:tree --targetdevhubusername devhub@org.com --package '04t0..'
   Main Package:0
   +- 1st Level Pacakge 1:A
   |  +- 2nd Level Package 1:C
@@ -29,7 +29,7 @@ export default class Tree extends SfdxCommand {
   |  \- 2nd Level Package last:E
   +- 1st Level Pacakge 2:B
   `,
-  `$ sfdx sdlc:dependency:tree -p 04tA..
+  `$ sfdx sdlc:dependency:tree -p '04tA..'
   1st Level Pacakge 1:A
   +- 2nd Level Package 1:C
   +- 2nd Level Package 2:D
@@ -62,7 +62,8 @@ export default class Tree extends SfdxCommand {
     const dxPackages: Package2Version[] = await dependencyApi.getPackagesByIds([packageId]);
     const dxPackage: Package2Version = dxPackages[0];
     const rootNode: DependencyTreeNode<Package2Version> = await dependencyBuilder.buildDependencyTree(dxPackage);
-    const visitor: DependencyTreeVisitor = new DependencyTreeVisitor(new DxPackageSerializer());
+    const visitor: DependencyTreeVisitor = new DependencyTreeVisitor();
+    visitor.serializer = new DxPackageSerializer();
     this.ux.log(visitor.visitTree(rootNode));
     // Return an object to be displayed with --json
     return { dependency: 'tree'};
