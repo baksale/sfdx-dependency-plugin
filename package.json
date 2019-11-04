@@ -1,7 +1,7 @@
 {
   "name": "sfdx-dependency-plugin",
   "description": "To work with DX Package Dependcies",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "java.rabota@gmail.com",
   "bugs": "https://github.com/baksale/sfdx-dependency-plugin/issues",
   "dependencies": {
