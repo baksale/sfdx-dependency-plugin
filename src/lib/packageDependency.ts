@@ -1,6 +1,6 @@
 import { Connection } from '@salesforce/core';
 import {EntityDependencyApi} from 'any-dependency-tree/dist/index'
-import { Package2Version, SubscriberPackageVersion, Dependencies } from './model';
+import { Package2Version, SubscriberPackageVersion } from './model';
 
 export class PackageDependencyApi implements EntityDependencyApi<Package2Version>{
     private packageToDependencyIds: Map<string, string[]> = new Map();
