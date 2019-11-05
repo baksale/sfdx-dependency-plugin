@@ -20,7 +20,7 @@ export class PackageDependencyApi implements EntityDependencyApi<Package2Version
         if(packageIds.length == 0) return result;
         const missingPackageIds: string[] = [];
         packageIds.forEach(id =>{
-            if(!this.packages.has(id)) missingPackageIds.push(id);
+            if(!this.packages.has(id)) missingPackageIds.push('\'' + id + '\'');
             else result.push(this.packages.get(id));
         });
         if(missingPackageIds.length == 0) return result;
@@ -30,7 +30,7 @@ export class PackageDependencyApi implements EntityDependencyApi<Package2Version
             .then(packageQueryResult => {
                 packageQueryResult.records.forEach(packageVersion => {
                     result.push(packageVersion);
-                    this.packages.set('\'' + packageVersion.SubscriberPackageVersionId + '\'', packageVersion);
+                    this.packages.set(packageVersion.SubscriberPackageVersionId, packageVersion);
                 })
             });
         return result;
@@ -50,7 +50,7 @@ export class PackageDependencyApi implements EntityDependencyApi<Package2Version
                 subscriberPackageVersion.records.forEach(packageVersion => {
                     if(packageVersion.Dependencies){
                         packageVersion.Dependencies&&packageVersion.Dependencies.ids.forEach(id =>{
-                            packageDependencyIds.push('\'' + id.subscriberPackageVersionId + '\'');
+                            packageDependencyIds.push(id.subscriberPackageVersionId);
                         });                        
                     }
                 });

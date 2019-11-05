@@ -56,7 +56,8 @@ export default class Tree extends SfdxCommand {
   protected static requiresProject = false;
 
   public async run(): Promise<AnyJson> {
-    const packageId:string = this.flags.package;
+    let packageId:string = this.flags.package;
+    packageId = packageId.replace('\'', '').replace('\'', '');
     const dependencyApi = new PackageDependencyApi(this.hubOrg.getConnection());
     const dependencyBuilder = new DependencyTreeBuilder<Package2Version>(dependencyApi);
     const dxPackages: Package2Version[] = await dependencyApi.getPackagesByIds([packageId]);
