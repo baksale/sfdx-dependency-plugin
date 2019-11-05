@@ -22,7 +22,7 @@ $ npm install -g sfdx-dependency-plugin
 $ sfdx COMMAND
 running command...
 $ sfdx (-v|--version|version)
-sfdx-dependency-plugin/0.0.9 win32-x64 node-v12.13.0
+sfdx-dependency-plugin/0.0.10 win32-x64 node-v12.13.0
 $ sfdx --help [COMMAND]
 USAGE
   $ sfdx COMMAND
@@ -30,15 +30,15 @@ USAGE
 ```
 <!-- usagestop -->
 <!-- commands -->
-* [`sfdx sdlc:dependency:tree [name=value...] [-p <string>] [-v <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-sdlcdependencytree-namevalue--p-string--v-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx sdlc:dependency:tree [-p <string>] [-v <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-sdlcdependencytree--p-string--v-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
 
-## `sfdx sdlc:dependency:tree [name=value...] [-p <string>] [-v <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+## `sfdx sdlc:dependency:tree [-p <string>] [-v <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 print a greeting and your org IDs
 
 ```
 USAGE
-  $ sfdx sdlc:dependency:tree [name=value...] [-p <string>] [-v <string>] [--apiversion <string>] [--json] [--loglevel 
+  $ sfdx sdlc:dependency:tree [-p <string>] [-v <string>] [--apiversion <string>] [--json] [--loglevel 
   trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
@@ -61,19 +61,19 @@ EXAMPLES
      +- 1st Level Pacakge 1:A
      |  +- 2nd Level Package 1:C
      |  +- 2nd Level Package 2:D
-     |  |  - 3rd Level Package only:F
-     |  - 2nd Level Package last:E
-     +- 1st Level Pacakge 2:B
+     |  |  \- 3rd Level Package only:F
+     |  \- 2nd Level Package last:E
+     \- 1st Level Pacakge 2:B
   
   $ sfdx sdlc:dependency:tree -p '04tA..'
      1st Level Pacakge 1:A
      +- 2nd Level Package 1:C
      +- 2nd Level Package 2:D
-     |  - 3rd Level Package only:F
-     - 2nd Level Package last:E
+     |  \- 3rd Level Package only:F
+     \- 2nd Level Package last:E
 ```
 
-_See code: [lib\commands\sdlc\dependency\tree.js](https://github.com/baksale/sfdx-dependency-plugin/blob/v0.0.9/lib\commands\sdlc\dependency\tree.js)_
+_See code: [lib\commands\sdlc\dependency\tree.js](https://github.com/baksale/sfdx-dependency-plugin/blob/v0.0.10/lib\commands\sdlc\dependency\tree.js)_
 <!-- commandsstop -->
 <!-- debugging-your-plugin -->
 # Debugging your plugin
