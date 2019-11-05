@@ -25,21 +25,20 @@ export default class Tree extends SfdxCommand {
   +- 1st Level Pacakge 1:A
   |  +- 2nd Level Package 1:C
   |  +- 2nd Level Package 2:D
-  |  |  \- 3rd Level Package only:F
-  |  \- 2nd Level Package last:E
-  +- 1st Level Pacakge 2:B
+  |  |  \\- 3rd Level Package only:F
+  |  \\- 2nd Level Package last:E
+  \\- 1st Level Pacakge 2:B
   `,
   `$ sfdx sdlc:dependency:tree -p '04tA..'
   1st Level Pacakge 1:A
   +- 2nd Level Package 1:C
   +- 2nd Level Package 2:D
-  |  \- 3rd Level Package only:F
-  \- 2nd Level Package last:E
+  |  \\- 3rd Level Package only:F
+  \\- 2nd Level Package last:E
   `
   ];
 
   public static args = [{name: 'file'}];
-  protected static varargs = true;
 
   protected static flagsConfig = {
     // flag with a value (-p, --package=VALUE)
