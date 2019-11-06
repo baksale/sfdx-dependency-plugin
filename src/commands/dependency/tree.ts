@@ -1,12 +1,12 @@
 import { flags, SfdxCommand } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
-import { PackageDependencyApi } from '../../../lib/packageDependency';
+import { PackageDependencyApi } from '../../lib/packageDependency';
 import { DependencyTreeBuilder } from 'any-dependency-tree/dist';
 import { DependencyTreeNode } from 'any-dependency-tree/dist/dependencyTreeNode';
-import { Package2Version } from '../../../lib/model';
+import { Package2Version } from '../../lib/model';
 import { DependencyTreeVisitor } from 'any-dependency-tree/dist/dependencyTreeVisitor';
-import { DxPackageSerializer } from '../../../lib/dxPackageSerializer';
+import { DxPackageSerializer } from '../../lib/dxPackageSerializer';
 
 // Initialize Messages with the current plugin directory
 Messages.importMessagesDirectory(__dirname);
@@ -42,7 +42,7 @@ export default class Tree extends SfdxCommand {
 
   protected static flagsConfig = {
     // flag with a value (-p, --package=VALUE)
-    package: flags.string({char: 'p', description: messages.getMessage('nameFlagDescription')})
+    package: flags.string({char: 'p', description: messages.getMessage('packageFlagDescription')})
   };
 
   // Comment this out if your command does not require an org username
@@ -56,6 +56,7 @@ export default class Tree extends SfdxCommand {
 
   public async run(): Promise<AnyJson> {
     let packageId:string = this.flags.package;
+    if(packageId == null){ return {errorMessage: messages.getMessage('errorNoPackageProvided')}}
     packageId = packageId.replace('\'', '').replace('\'', '');
     const dependencyApi = new PackageDependencyApi(this.hubOrg.getConnection());
     const dependencyBuilder = new DependencyTreeBuilder<Package2Version>(dependencyApi);
