@@ -72,6 +72,8 @@ EXAMPLES
      |  \- 3rd Level Package only:F
      \- 2nd Level Package last:E
 ```
+
+_See code: [lib\commands\dependency\tree.js](https://github.com/baksale/sfdx-dependency-plugin/blob/v1.0.0/lib\commands\dependency\tree.js)_
 <!-- commandsstop -->
 <!-- debugging-your-plugin -->
 # Debugging your plugin
