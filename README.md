@@ -22,7 +22,7 @@ $ npm install -g sfdx-dependency-plugin
 $ sfdx COMMAND
 running command...
 $ sfdx (-v|--version|version)
-sfdx-dependency-plugin/0.0.10 win32-x64 node-v12.13.0
+sfdx-dependency-plugin/1.0.0 win32-x64 node-v12.13.0
 $ sfdx --help [COMMAND]
 USAGE
   $ sfdx COMMAND
@@ -30,19 +30,19 @@ USAGE
 ```
 <!-- usagestop -->
 <!-- commands -->
-* [`sfdx sdlc:dependency:tree [-p <string>] [-v <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-sdlcdependencytree--p-string--v-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx dependency:tree [-p <string>] [-v <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-dependencytree--p-string--v-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
 
-## `sfdx sdlc:dependency:tree [-p <string>] [-v <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+## `sfdx dependency:tree [-p <string>] [-v <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
-print a greeting and your org IDs
+view dependency tree for a package
 
 ```
 USAGE
-  $ sfdx sdlc:dependency:tree [-p <string>] [-v <string>] [--apiversion <string>] [--json] [--loglevel 
+  $ sfdx dependency:tree [-p <string>] [-v <string>] [--apiversion <string>] [--json] [--loglevel 
   trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -p, --package=package                                                             name to print
+  -p, --package=package                                                             package id to view dependencies for
 
   -v, --targetdevhubusername=targetdevhubusername                                   username or alias for the dev hub
                                                                                     org; overrides default dev hub org
@@ -72,8 +72,6 @@ EXAMPLES
      |  \- 3rd Level Package only:F
      \- 2nd Level Package last:E
 ```
-
-_See code: [lib\commands\sdlc\dependency\tree.js](https://github.com/baksale/sfdx-dependency-plugin/blob/v0.0.10/lib\commands\sdlc\dependency\tree.js)_
 <!-- commandsstop -->
 <!-- debugging-your-plugin -->
 # Debugging your plugin
