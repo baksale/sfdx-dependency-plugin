@@ -48,7 +48,7 @@ export default class Tree extends SfdxCommand {
     patch: flags.boolean({char: 'h', description: messages.getMessage('patchFlagDescription')}),
     build: flags.boolean({char: 'b', description: messages.getMessage('buildFlagDescription')}),
     name: flags.boolean({char: 'n', description: messages.getMessage('nameFlagDescription')}),
-    version: flags.boolean({char: 'v', description: messages.getMessage('versionFlagDescription')})
+    version: flags.boolean({char: 'i', description: messages.getMessage('versionFlagDescription')})
   };
 
   // Comment this out if your command does not require an org username
