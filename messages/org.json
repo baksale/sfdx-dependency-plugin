@@ -1,5 +1,11 @@
 {
   "commandDescription": "view dependency tree for a package",
   "packageFlagDescription": "package id to view dependencies for",
-  "errorNoPackageProvided": "No package id provided"
+  "errorNoPackageProvided": "No package id provided",
+  "majorFlagDescription" : "display package major version",
+  "minorFlagDescription" : "display package minor version",
+  "patchFlagDescription" : "display package patch version",
+  "buildFlagDescription" : "display package build number",
+  "nameFlagDescription" : "display package name",
+  "versionFlagDescription" : "display package id"
 }
