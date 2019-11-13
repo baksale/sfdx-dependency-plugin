@@ -70,6 +70,8 @@ EXAMPLE
     04t04..
 ```
 
+_See code: [lib\commands\dependency\order.js](https://github.com/baksale/sfdx-dependency-plugin/blob/v1.1.1/lib\commands\dependency\order.js)_
+
 ## `sfdx dependency:tree [-p <string>] [-j] [-r] [-h] [-b] [-n] [-i] [-v <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 view dependency tree for a package
@@ -116,4 +118,6 @@ EXAMPLES
      |  \- 3rd Level Package only:F
      \- 2nd Level Package last:E
 ```
+
+_See code: [lib\commands\dependency\tree.js](https://github.com/baksale/sfdx-dependency-plugin/blob/v1.1.1/lib\commands\dependency\tree.js)_
 <!-- commandsstop -->
