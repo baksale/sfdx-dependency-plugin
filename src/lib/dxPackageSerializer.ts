@@ -13,7 +13,7 @@ export class DxPackageSerializer implements Serializer<Package2Version>{
         
     }
     serialize(element: Package2Version): string {
-        return (this.name ? (element.Package2.Name : '')
+        return (this.name ? element.Package2.Name : '')
             + (this.major ? (':' + element.MajorVersion) : '')
             + (this.minor ? ('.' + element.MinorVersion) : '')
             + (this.patch ? ('.' + element.PatchVersion) : '')
