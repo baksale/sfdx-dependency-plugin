@@ -5,8 +5,6 @@ import { PackageDependencyApi } from '../../lib/packageDependency';
 import { DependencyTreeBuilder } from 'any-dependency-tree/dist';
 import { DependencyTreeNode } from 'any-dependency-tree/dist/dependencyTreeNode';
 import { Package2Version } from '../../lib/model';
-import { DependencyTreeVisitor } from 'any-dependency-tree/dist/dependencyTreeVisitor';
-import { DxPackageSerializer } from '../../lib/dxPackageSerializer';
 
 // Initialize Messages with the current plugin directory
 Messages.importMessagesDirectory(__dirname);
@@ -20,7 +18,7 @@ export default class Tree extends SfdxCommand {
   public static description = messages.getMessage('commandDescription');
 
   public static examples = [
-  `$ sfdx sdlc:dependency:order --package '04t0..'
+  `$ sfdx dependency:order --package '04t0..'
  04t01..
  04t02..
  04t03..
