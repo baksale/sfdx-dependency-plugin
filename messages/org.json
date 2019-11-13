@@ -2,10 +2,11 @@
   "commandDescription": "view dependency tree for a package",
   "packageFlagDescription": "package id to view dependencies for",
   "errorNoPackageProvided": "No package id provided",
-  "majorFlagDescription" : "display package major version",
-  "minorFlagDescription" : "display package minor version",
-  "patchFlagDescription" : "display package patch version",
-  "buildFlagDescription" : "display package build number",
-  "nameFlagDescription" : "display package name",
-  "versionFlagDescription" : "display package id"
+  "majorFlagDescription" : "displays package major version",
+  "minorFlagDescription" : "displays package minor version",
+  "patchFlagDescription" : "displays package patch version",
+  "buildFlagDescription" : "displays package build number",
+  "nameFlagDescription" : "displays package name",
+  "versionFlagDescription" : "displays package id",
+  "levelFlagDescription" : "displays level"
 }

@@ -20,21 +20,11 @@ export default class Tree extends SfdxCommand {
   public static description = messages.getMessage('commandDescription');
 
   public static examples = [
-  `$ sfdx sdlc:dependency:tree --targetdevhubusername devhub@org.com --package '04t0..'
-  Main Package:0
-  +- 1st Level Pacakge 1:A
-  |  +- 2nd Level Package 1:C
-  |  +- 2nd Level Package 2:D
-  |  |  \\- 3rd Level Package only:F
-  |  \\- 2nd Level Package last:E
-  \\- 1st Level Pacakge 2:B
-  `,
-  `$ sfdx sdlc:dependency:tree -p '04tA..'
-  1st Level Pacakge 1:A
-  +- 2nd Level Package 1:C
-  +- 2nd Level Package 2:D
-  |  \\- 3rd Level Package only:F
-  \\- 2nd Level Package last:E
+  `$ sfdx sdlc:dependency:order --package '04t0..'
+ 04t01..
+ 04t02..
+ 04t03..
+ 04t04..
   `
   ];
 
@@ -43,12 +33,12 @@ export default class Tree extends SfdxCommand {
   protected static flagsConfig = {
     // flag with a value (-p, --package=VALUE)
     package: flags.string({char: 'p', description: messages.getMessage('packageFlagDescription')}),
-    major: flags.boolean({char: 'j', description: messages.getMessage('majorFlagDescription'), default: true}),
-    minor: flags.boolean({char: 'r', description: messages.getMessage('minorFlagDescription'), default: true}),
+    major: flags.boolean({char: 'j', description: messages.getMessage('majorFlagDescription'), default: false}),
+    minor: flags.boolean({char: 'r', description: messages.getMessage('minorFlagDescription'), default: false}),
     patch: flags.boolean({char: 'h', description: messages.getMessage('patchFlagDescription'), default: false}),
     build: flags.boolean({char: 'b', description: messages.getMessage('buildFlagDescription'), default: false}),
-    name: flags.boolean({char: 'n', description: messages.getMessage('nameFlagDescription'), default: true}),
-    version: flags.boolean({char: 'i', description: messages.getMessage('versionFlagDescription'), default: true})
+    name: flags.boolean({char: 'n', description: messages.getMessage('nameFlagDescription'), default: false}),
+    level: flags.boolean({char: 'l', description: messages.getMessage('levelFlagDescription'), default: false})
   };
 
   // Comment this out if your command does not require an org username
@@ -69,16 +59,26 @@ export default class Tree extends SfdxCommand {
     const dxPackages: Package2Version[] = await dependencyApi.getPackagesByIds([packageId]);
     const dxPackage: Package2Version = dxPackages[0];
     const rootNode: DependencyTreeNode<Package2Version> = await dependencyBuilder.buildDependencyTree(dxPackage);
-    const visitor: DependencyTreeVisitor = new DependencyTreeVisitor();
-    visitor.serializer = new DxPackageSerializer(
-      this.flags.major,
-      this.flags.minor,
-      this.flags.patch,
-      this.flags.build,
-      this.flags.name,
-      this.flags.version);
-    this.ux.log(visitor.visitTree(rootNode));
+    const orderedPackages = this.getOrder(rootNode).reverse();
+    orderedPackages.forEach(element => {
+      const line: string = element.SubscriberPackageVersionId
+      + (this.flags.name ?  (':' + element.Package2.Name) : '')
+      + (this.flags.major ? (':' + element.MajorVersion) : '')
+      + (this.flags.minor ? ('.' + element.MinorVersion) : '')
+      + (this.flags.patch ? ('.' + element.PatchVersion) : '')
+      + (this.flags.build ? ('.' + element.BuildNumber) : '')
+      this.ux.log(line);
+    });
     // Return an object to be displayed with --json
     return { dependency: 'tree'};
+  }
+  private getOrder(rootNode: DependencyTreeNode<Package2Version>){
+    const result: Package2Version[] = [];
+    result.push(rootNode.nodeElement);
+    rootNode.children.forEach(node => {
+      const nodeResult = this.getOrder(node)
+      nodeResult.forEach(el => result.push(el));
+    })
+    return result;
   }
 }
