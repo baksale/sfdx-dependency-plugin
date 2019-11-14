@@ -43,7 +43,7 @@ export default class Tree extends SfdxCommand {
   protected static flagsConfig = {
     // flag with a value (-p, --package=VALUE)
     package: flags.string({char: 'p', description: messages.getMessage('packageFlagDescription')}),
-    name: flags.boolean({char: 'n', description: messages.getMessage('nameFlagDescription'), default: false}),
+    name: flags.boolean({char: 'n', description: messages.getMessage('nameFlagDescription'), default: true}),
     version: flags.boolean({description: messages.getMessage('packageVersionDescription'), default: false}),
     id: flags.boolean({description: messages.getMessage('idFlagDescription'), default: false})
   };
