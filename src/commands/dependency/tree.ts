@@ -43,12 +43,9 @@ export default class Tree extends SfdxCommand {
   protected static flagsConfig = {
     // flag with a value (-p, --package=VALUE)
     package: flags.string({char: 'p', description: messages.getMessage('packageFlagDescription')}),
-    major: flags.boolean({char: 'j', description: messages.getMessage('majorFlagDescription'), default: true}),
-    minor: flags.boolean({char: 'r', description: messages.getMessage('minorFlagDescription'), default: true}),
-    patch: flags.boolean({char: 'h', description: messages.getMessage('patchFlagDescription'), default: false}),
-    build: flags.boolean({char: 'b', description: messages.getMessage('buildFlagDescription'), default: false}),
     name: flags.boolean({char: 'n', description: messages.getMessage('nameFlagDescription'), default: true}),
-    version: flags.boolean({char: 'i', description: messages.getMessage('versionFlagDescription'), default: true})
+    version: flags.boolean({description: messages.getMessage('packageVersionDescription'), default: true}),
+    id: flags.boolean({description: messages.getMessage('idFlagDescription'), default: false})
   };
 
   // Comment this out if your command does not require an org username
@@ -71,12 +68,9 @@ export default class Tree extends SfdxCommand {
     const rootNode: DependencyTreeNode<Package2Version> = await dependencyBuilder.buildDependencyTree(dxPackage);
     const visitor: DependencyTreeVisitor = new DependencyTreeVisitor();
     visitor.serializer = new DxPackageSerializer(
-      this.flags.major,
-      this.flags.minor,
-      this.flags.patch,
-      this.flags.build,
       this.flags.name,
-      this.flags.version);
+      this.flags.version,
+      this.flags.id);
     this.ux.log(visitor.visitTree(rootNode));
     // Return an object to be displayed with --json
     return { dependency: 'tree'};

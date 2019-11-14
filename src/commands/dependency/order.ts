@@ -4,7 +4,7 @@ import { AnyJson } from '@salesforce/ts-types';
 import { PackageDependencyApi } from '../../lib/packageDependency';
 import { DependencyTreeBuilder } from 'any-dependency-tree/dist';
 import { DependencyTreeNode } from 'any-dependency-tree/dist/dependencyTreeNode';
-import { Package2Version } from '../../lib/model';
+import { Package2Version, Version, Package2 } from '../../lib/model';
 
 // Initialize Messages with the current plugin directory
 Messages.importMessagesDirectory(__dirname);
@@ -31,12 +31,10 @@ export default class Tree extends SfdxCommand {
   protected static flagsConfig = {
     // flag with a value (-p, --package=VALUE)
     package: flags.string({char: 'p', description: messages.getMessage('packageFlagDescription')}),
-    major: flags.boolean({char: 'j', description: messages.getMessage('majorFlagDescription'), default: false}),
-    minor: flags.boolean({char: 'r', description: messages.getMessage('minorFlagDescription'), default: false}),
-    patch: flags.boolean({char: 'h', description: messages.getMessage('patchFlagDescription'), default: false}),
-    build: flags.boolean({char: 'b', description: messages.getMessage('buildFlagDescription'), default: false}),
+    id: flags.boolean({description: messages.getMessage('idFlagDescription'), default: true}),
     name: flags.boolean({char: 'n', description: messages.getMessage('nameFlagDescription'), default: false}),
-    level: flags.boolean({char: 'l', description: messages.getMessage('levelFlagDescription'), default: false})
+    version: flags.boolean({description: messages.getMessage('packageVersionDescription'), default: false}),
+    maxversion: flags.boolean({char: 'x', description: messages.getMessage('maxVersionFlagDescription'), default: false})
   };
 
   // Comment this out if your command does not require an org username
@@ -57,14 +55,38 @@ export default class Tree extends SfdxCommand {
     const dxPackages: Package2Version[] = await dependencyApi.getPackagesByIds([packageId]);
     const dxPackage: Package2Version = dxPackages[0];
     const rootNode: DependencyTreeNode<Package2Version> = await dependencyBuilder.buildDependencyTree(dxPackage);
-    const orderedPackages = this.getOrder(rootNode).reverse();
+    let orderedPackages = this.getOrder(rootNode).reverse();
+    if(this.flags.maxversion){
+      const tempMap = new Map<Package2,Package2Version[]>();
+      orderedPackages.forEach(element =>{
+        if(tempMap.has(element.Package2)) tempMap.set(element.Package2, []);
+        const versions = tempMap.get(element.Package2);
+        versions.push(element);
+      });
+      const result: Package2Version[] = [];
+      tempMap.forEach((v: Package2Version[], k: Package2) => {
+        result.push(v.sort((v1, v2) => {
+          return  v1.version.MajorVersion != v2.version.MajorVersion
+                  ? v1.version.MajorVersion - v2.version.MajorVersion
+                  : v1.version.MinorVersion != v2.version.MinorVersion
+                    ? v1.version.MinorVersion - v2.version.MinorVersion
+                    : v1.version.PatchVersion != v2.version.PatchVersion
+                      ? v1.version.PatchVersion - v2.version.PatchVersion
+                      : v1.version.BuildNumber - v2.version.BuildNumber
+                      })[0]
+                    );
+      });
+      orderedPackages = result;
+    }
     orderedPackages.forEach(element => {
-      const line: string = element.SubscriberPackageVersionId
-      + (this.flags.name ?  (':' + element.Package2.Name) : '')
-      + (this.flags.major ? (':' + element.MajorVersion) : '')
-      + (this.flags.minor ? ('.' + element.MinorVersion) : '')
-      + (this.flags.patch ? ('.' + element.PatchVersion) : '')
-      + (this.flags.build ? ('.' + element.BuildNumber) : '')
+      const line: string =
+        (this.flags.id      ? element.SubscriberPackageVersionId : '')
+      + (this.flags.name    ? (':' + element.Package2.Name) : '')
+      + (this.flags.version ? (':' + element.version.MajorVersion
+                                    + '.' + element.version.MinorVersion
+                                    + '.' + element.version.PatchVersion
+                                    + '.' + element.version.BuildNumber) : '')
+      + (this.flags.level   ? (':' + element.Package2.Name) : '')
       this.ux.log(line);
     });
     // Return an object to be displayed with --json
