@@ -26,17 +26,14 @@ export interface Package2Version{
     Description? : string;
     Tag?: string;
     Branch?: string;
-    version: Version;
-    IsRelease: boolean;
-    CreatedDate: string;
-    LasteModifiedDate: string;
-    IsPasswordProtected: boolean;
-}
-export interface Version{
     MajorVersion: number;
     MinorVersion: number;
     PatchVersion: number;
     BuildNumber: number;
+    IsRelease: boolean;
+    CreatedDate: string;
+    LasteModifiedDate: string;
+    IsPasswordProtected: boolean;
 }
 
 export interface Package2{
