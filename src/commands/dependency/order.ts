@@ -4,7 +4,7 @@ import { AnyJson } from '@salesforce/ts-types';
 import { PackageDependencyApi } from '../../lib/packageDependency';
 import { DependencyTreeBuilder } from 'any-dependency-tree/dist';
 import { DependencyTreeNode } from 'any-dependency-tree/dist/dependencyTreeNode';
-import { Package2Version, Package2 } from '../../lib/model';
+import { Package2Version } from '../../lib/model';
 
 // Initialize Messages with the current plugin directory
 Messages.importMessagesDirectory(__dirname);
