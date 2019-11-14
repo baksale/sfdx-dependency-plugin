@@ -4,7 +4,7 @@ import { AnyJson } from '@salesforce/ts-types';
 import { PackageDependencyApi } from '../../lib/packageDependency';
 import { DependencyTreeBuilder } from 'any-dependency-tree/dist';
 import { DependencyTreeNode } from 'any-dependency-tree/dist/dependencyTreeNode';
-import { Package2Version, Version, Package2 } from '../../lib/model';
+import { Package2Version, Package2 } from '../../lib/model';
 
 // Initialize Messages with the current plugin directory
 Messages.importMessagesDirectory(__dirname);
@@ -66,13 +66,13 @@ export default class Tree extends SfdxCommand {
       const result: Package2Version[] = [];
       tempMap.forEach((v: Package2Version[], k: Package2) => {
         result.push(v.sort((v1, v2) => {
-          return  v1.version.MajorVersion != v2.version.MajorVersion
-                  ? v1.version.MajorVersion - v2.version.MajorVersion
-                  : v1.version.MinorVersion != v2.version.MinorVersion
-                    ? v1.version.MinorVersion - v2.version.MinorVersion
-                    : v1.version.PatchVersion != v2.version.PatchVersion
-                      ? v1.version.PatchVersion - v2.version.PatchVersion
-                      : v1.version.BuildNumber - v2.version.BuildNumber
+          return  v1.MajorVersion != v2.MajorVersion
+                  ? v1.MajorVersion - v2.MajorVersion
+                  : v1.MinorVersion != v2.MinorVersion
+                    ? v1.MinorVersion - v2.MinorVersion
+                    : v1.PatchVersion != v2.PatchVersion
+                      ? v1.PatchVersion - v2.PatchVersion
+                      : v1.BuildNumber - v2.BuildNumber
                       })[0]
                     );
       });
@@ -82,10 +82,10 @@ export default class Tree extends SfdxCommand {
       const line: string =
         (this.flags.id      ? element.SubscriberPackageVersionId : '')
       + (this.flags.name    ? (':' + element.Package2.Name) : '')
-      + (this.flags.version ? (':' + element.version.MajorVersion
-                                    + '.' + element.version.MinorVersion
-                                    + '.' + element.version.PatchVersion
-                                    + '.' + element.version.BuildNumber) : '')
+      + (this.flags.version ? (':' + element.MajorVersion
+                                    + '.' + element.MinorVersion
+                                    + '.' + element.PatchVersion
+                                    + '.' + element.BuildNumber) : '')
       + (this.flags.level   ? (':' + element.Package2.Name) : '')
       this.ux.log(line);
     });
