@@ -31,10 +31,10 @@ export default class Tree extends SfdxCommand {
   protected static flagsConfig = {
     // flag with a value (-p, --package=VALUE)
     package: flags.string({char: 'p', description: messages.getMessage('packageFlagDescription')}),
-    id: flags.boolean({description: messages.getMessage('idFlagDescription'), default: true}),
     name: flags.boolean({char: 'n', description: messages.getMessage('nameFlagDescription'), default: false}),
     version: flags.boolean({description: messages.getMessage('packageVersionDescription'), default: false}),
-    maxversion: flags.boolean({char: 'x', description: messages.getMessage('maxVersionFlagDescription'), default: false})
+    maxversion: flags.boolean({char: 'x', description: messages.getMessage('maxVersionFlagDescription'), default: false}),
+    withrootpackage: flags.boolean({char: 'w', description: messages.getMessage('withRootPackageFlagDescription'), default: false})
   };
 
   // Comment this out if your command does not require an org username
@@ -55,17 +55,17 @@ export default class Tree extends SfdxCommand {
     const dxPackages: Package2Version[] = await dependencyApi.getPackagesByIds([packageId]);
     const dxPackage: Package2Version = dxPackages[0];
     const rootNode: DependencyTreeNode<Package2Version> = await dependencyBuilder.buildDependencyTree(dxPackage);
-    let orderedPackages = this.getOrder(rootNode).reverse();
+    let orderedPackages = this.getOrderWithRoot(rootNode, this.flags.withrootpackage).reverse();
     if(this.flags.maxversion){
-      const tempMap = new Map<Package2,Package2Version[]>();
+      const tempMap = new Map<String,Package2Version[]>();
       orderedPackages.forEach(element =>{
-        if(tempMap.has(element.Package2)) tempMap.set(element.Package2, []);
-        const versions = tempMap.get(element.Package2);
+        if(!tempMap.has(element.Package2.Name)) tempMap.set(element.Package2.Name, []);
+        const versions = tempMap.get(element.Package2.Name);
         versions.push(element);
       });
       const result: Package2Version[] = [];
-      tempMap.forEach((v: Package2Version[], k: Package2) => {
-        result.push(v.sort((v1, v2) => {
+      tempMap.forEach((v: Package2Version[], k: String) => {
+        result.push(v.sort((v2, v1) => {
           return  v1.MajorVersion != v2.MajorVersion
                   ? v1.MajorVersion - v2.MajorVersion
                   : v1.MinorVersion != v2.MinorVersion
@@ -79,20 +79,27 @@ export default class Tree extends SfdxCommand {
       orderedPackages = result;
     }
     orderedPackages.forEach(element => {
-      const line: string =
-        (this.flags.id      ? element.SubscriberPackageVersionId : '')
+      const line: string = element.SubscriberPackageVersionId
       + (this.flags.name    ? (':' + element.Package2.Name) : '')
       + (this.flags.version ? (':' + element.MajorVersion
                                     + '.' + element.MinorVersion
                                     + '.' + element.PatchVersion
-                                    + '.' + element.BuildNumber) : '')
-      + (this.flags.level   ? (':' + element.Package2.Name) : '')
+                                    + '.' + element.BuildNumber) : '');
       this.ux.log(line);
     });
     // Return an object to be displayed with --json
-    return { dependency: 'tree'};
+    return { dependency: 'order'};
   }
-  private getOrder(rootNode: DependencyTreeNode<Package2Version>){
+  private getOrderWithRoot(rootNode: DependencyTreeNode<Package2Version>, withRoot: boolean): Package2Version[]{
+    const result: Package2Version[] = [];
+    if(withRoot) result.push(rootNode.nodeElement);
+    rootNode.children.forEach(node => {
+      const nodeResult = this.getOrder(node)
+      nodeResult.forEach(el => result.push(el));
+    })
+    return result;
+  }
+  private getOrder(rootNode: DependencyTreeNode<Package2Version>): Package2Version[]{
     const result: Package2Version[] = [];
     result.push(rootNode.nodeElement);
     rootNode.children.forEach(node => {

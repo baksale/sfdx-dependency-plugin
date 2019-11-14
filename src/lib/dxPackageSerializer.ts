@@ -11,10 +11,10 @@ export class DxPackageSerializer implements Serializer<Package2Version>{
     }
     serialize(element: Package2Version): string {
         return (this.name ? element.Package2.Name : '')
-            + (this.version ? (':' + element.version.MajorVersion
-                                + '.' + element.version.MinorVersion
-                                + '.' + element.version.PatchVersion
-                                + '.' + element.version.BuildNumber) : '')
+            + (this.version ? (':' + element.MajorVersion
+                                + '.' + element.MinorVersion
+                                + '.' + element.PatchVersion
+                                + '.' + element.BuildNumber) : '')
             + (this.id ? (':' + element.SubscriberPackageVersionId) : '');
     }
     
