@@ -5,5 +5,6 @@
   "packageVersionDescription" : "displays package version",
   "nameFlagDescription" : "displays package name",
   "idFlagDescription" : "displays package id",
-  "maxVersionFlagDescription" : "displays max version only"  
+  "maxVersionFlagDescription" : "displays max version only",
+  "withRootPackageFlagDescription" : "includes root package into the final list"
 }
