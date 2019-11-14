@@ -22,7 +22,7 @@ $ npm install -g sfdx-dependency-plugin
 $ sfdx COMMAND
 running command...
 $ sfdx (-v|--version|version)
-sfdx-dependency-plugin/1.1.1 win32-x64 node-v12.13.0
+sfdx-dependency-plugin/1.1.2 win32-x64 node-v12.13.0
 $ sfdx --help [COMMAND]
 USAGE
   $ sfdx COMMAND
@@ -30,29 +30,29 @@ USAGE
 ```
 <!-- usagestop -->
 <!-- commands -->
-* [`sfdx dependency:order [-p <string>] [-j] [-r] [-h] [-b] [-n] [-l] [-v <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-dependencyorder--p-string--j--r--h--b--n--l--v-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
-* [`sfdx dependency:tree [-p <string>] [-j] [-r] [-h] [-b] [-n] [-i] [-v <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-dependencytree--p-string--j--r--h--b--n--i--v-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx dependency:order [-p <string>] [-n] [--version] [-x] [-w] [-v <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-dependencyorder--p-string--n---version--x--w--v-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx dependency:tree [-p <string>] [-n] [--version] [--id] [-v <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-dependencytree--p-string--n---version---id--v-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
 
-## `sfdx dependency:order [-p <string>] [-j] [-r] [-h] [-b] [-n] [-l] [-v <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+## `sfdx dependency:order [-p <string>] [-n] [--version] [-x] [-w] [-v <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 view dependency tree for a package
 
 ```
 USAGE
-  $ sfdx dependency:order [-p <string>] [-j] [-r] [-h] [-b] [-n] [-l] [-v <string>] [--apiversion <string>] [--json] 
+  $ sfdx dependency:order [-p <string>] [-n] [--version] [-x] [-w] [-v <string>] [--apiversion <string>] [--json] 
   [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -b, --build                                                                       displays package build number
-  -h, --patch                                                                       displays package patch version
-  -j, --major                                                                       displays package major version
-  -l, --level                                                                       displays level
   -n, --name                                                                        displays package name
   -p, --package=package                                                             package id to view dependencies for
-  -r, --minor                                                                       displays package minor version
 
   -v, --targetdevhubusername=targetdevhubusername                                   username or alias for the dev hub
                                                                                     org; overrides default dev hub org
+
+  -w, --withrootpackage                                                             includes root package into the final
+                                                                                    list
+
+  -x, --maxversion                                                                  displays max version only
 
   --apiversion=apiversion                                                           override the api version used for
                                                                                     api requests made by this command
@@ -61,6 +61,8 @@ OPTIONS
 
   --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
                                                                                     this command invocation
+
+  --version                                                                         displays package version
 
 EXAMPLE
   $ sfdx dependency:order --package '04t0..'
@@ -70,25 +72,20 @@ EXAMPLE
     04t04..
 ```
 
-_See code: [lib\commands\dependency\order.js](https://github.com/baksale/sfdx-dependency-plugin/blob/v1.1.1/lib\commands\dependency\order.js)_
+_See code: [lib\commands\dependency\order.js](https://github.com/baksale/sfdx-dependency-plugin/blob/v1.1.2/lib\commands\dependency\order.js)_
 
-## `sfdx dependency:tree [-p <string>] [-j] [-r] [-h] [-b] [-n] [-i] [-v <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+## `sfdx dependency:tree [-p <string>] [-n] [--version] [--id] [-v <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 view dependency tree for a package
 
 ```
 USAGE
-  $ sfdx dependency:tree [-p <string>] [-j] [-r] [-h] [-b] [-n] [-i] [-v <string>] [--apiversion <string>] [--json] 
+  $ sfdx dependency:tree [-p <string>] [-n] [--version] [--id] [-v <string>] [--apiversion <string>] [--json] 
   [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -b, --build                                                                       displays package build number
-  -h, --patch                                                                       displays package patch version
-  -i, --version                                                                     displays package id
-  -j, --major                                                                       displays package major version
   -n, --name                                                                        displays package name
   -p, --package=package                                                             package id to view dependencies for
-  -r, --minor                                                                       displays package minor version
 
   -v, --targetdevhubusername=targetdevhubusername                                   username or alias for the dev hub
                                                                                     org; overrides default dev hub org
@@ -96,10 +93,14 @@ OPTIONS
   --apiversion=apiversion                                                           override the api version used for
                                                                                     api requests made by this command
 
+  --id                                                                              displays package id
+
   --json                                                                            format output as json
 
   --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
                                                                                     this command invocation
+
+  --version                                                                         displays package version
 
 EXAMPLES
   $ sfdx dependency:tree --targetdevhubusername devhub@org.com --package '04t0..'
@@ -119,5 +120,5 @@ EXAMPLES
      \- 2nd Level Package last:E
 ```
 
-_See code: [lib\commands\dependency\tree.js](https://github.com/baksale/sfdx-dependency-plugin/blob/v1.1.1/lib\commands\dependency\tree.js)_
+_See code: [lib\commands\dependency\tree.js](https://github.com/baksale/sfdx-dependency-plugin/blob/v1.1.2/lib\commands\dependency\tree.js)_
 <!-- commandsstop -->
