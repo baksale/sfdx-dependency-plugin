@@ -10,7 +10,7 @@
     "@oclif/errors": "^1",
     "@salesforce/command": "^2",
     "@salesforce/core": "^2",
-    "any-dependency-tree": "0.0.6",
+    "any-dependency-tree": "^1",
     "tslib": "^1"
   },
   "devDependencies": {

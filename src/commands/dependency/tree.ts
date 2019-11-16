@@ -1,12 +1,12 @@
 import { flags, SfdxCommand } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
-import { PackageDependencyApi } from '../../lib/packageDependency';
 import { DependencyTreeBuilder } from 'any-dependency-tree/dist';
 import { DependencyTreeNode } from 'any-dependency-tree/dist/dependencyTreeNode';
-import { Package2Version } from '../../lib/model';
-import { DependencyTreeVisitor } from 'any-dependency-tree/dist/dependencyTreeVisitor';
+import { Serializing } from 'any-dependency-tree/dist/visitor/serializing';
 import { DxPackageSerializer } from '../../lib/dxPackageSerializer';
+import { Package2Version } from '../../lib/model';
+import { PackageDependencyApi } from '../../lib/packageDependency';
 
 // Initialize Messages with the current plugin directory
 Messages.importMessagesDirectory(__dirname);
@@ -58,21 +58,18 @@ export default class Tree extends SfdxCommand {
   protected static requiresProject = false;
 
   public async run(): Promise<AnyJson> {
-    let packageId:string = this.flags.package;
-    if(packageId == null){ return {errorMessage: messages.getMessage('errorNoPackageProvided')}}
+    let packageId: string = this.flags.package;
+    if (packageId == null) { return {errorMessage: messages.getMessage('errorNoPackageProvided')}; }
     packageId = packageId.replace('\'', '').replace('\'', '');
     const dependencyApi = new PackageDependencyApi(this.hubOrg.getConnection());
     const dependencyBuilder = new DependencyTreeBuilder<Package2Version>(dependencyApi);
     const dxPackages: Package2Version[] = await dependencyApi.getPackagesByIds([packageId]);
     const dxPackage: Package2Version = dxPackages[0];
     const rootNode: DependencyTreeNode<Package2Version> = await dependencyBuilder.buildDependencyTree(dxPackage);
-    const visitor: DependencyTreeVisitor = new DependencyTreeVisitor();
-    visitor.serializer = new DxPackageSerializer(
-      this.flags.name,
-      this.flags.version,
-      this.flags.id);
+    const serializer = new DxPackageSerializer(this.flags.name, this.flags.version, this.flags.id);
+    const visitor: Serializing = new Serializing(serializer);
     this.ux.log(visitor.visitTree(rootNode));
     // Return an object to be displayed with --json
-    return { dependency: 'tree'};
+    return new Serializing(serializer, true).visitTree(rootNode);
   }
 }
