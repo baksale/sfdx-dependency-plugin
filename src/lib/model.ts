@@ -1,9 +1,9 @@
-export interface SubscriberPackageVersion{
+export interface SubscriberPackageVersion {
     attributes: Attributes;
     Dependencies: Dependencies;
 }
 
-export interface Dependencies{
+export interface Dependencies {
     ids: Id[];
 }
 
@@ -11,12 +11,12 @@ export interface Id {
     subscriberPackageVersionId: string;
 }
 
-export interface Attributes{
+export interface Attributes {
     type: string;
     url: string;
 }
 
-export interface Package2Version{
+export interface Package2Version {
     attributes: Attributes;
     Id: string;
     Package2Id: string;
@@ -36,7 +36,7 @@ export interface Package2Version{
     IsPasswordProtected: boolean;
 }
 
-export interface Package2{
+export interface Package2 {
     attributes: Attributes;
     Name: string;
     NamespacePrefix?: string;

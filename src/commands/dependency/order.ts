@@ -1,10 +1,11 @@
 import { flags, SfdxCommand } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
-import { PackageDependencyApi } from '../../lib/packageDependency';
 import { DependencyTreeBuilder } from 'any-dependency-tree/dist';
 import { DependencyTreeNode } from 'any-dependency-tree/dist/dependencyTreeNode';
+import { Ordering } from 'any-dependency-tree/dist/visitor/ordering';
 import { Package2Version } from '../../lib/model';
+import { PackageDependencyApi } from '../../lib/packageDependency';
 
 // Initialize Messages with the current plugin directory
 Messages.importMessagesDirectory(__dirname);
@@ -47,65 +48,48 @@ export default class Tree extends SfdxCommand {
   protected static requiresProject = false;
 
   public async run(): Promise<AnyJson> {
-    let packageId:string = this.flags.package;
-    if(packageId == null){ return {errorMessage: messages.getMessage('errorNoPackageProvided')}}
+    let packageId: string = this.flags.package;
+    if (packageId == null) { return {errorMessage: messages.getMessage('errorNoPackageProvided')}; }
     packageId = packageId.replace('\'', '').replace('\'', '');
     const dependencyApi = new PackageDependencyApi(this.hubOrg.getConnection());
     const dependencyBuilder = new DependencyTreeBuilder<Package2Version>(dependencyApi);
     const dxPackages: Package2Version[] = await dependencyApi.getPackagesByIds([packageId]);
     const dxPackage: Package2Version = dxPackages[0];
     const rootNode: DependencyTreeNode<Package2Version> = await dependencyBuilder.buildDependencyTree(dxPackage);
-    let orderedPackages = this.getOrderWithRoot(rootNode, this.flags.withrootpackage).reverse();
-    if(this.flags.maxversion){
-      const tempMap = new Map<String,Package2Version[]>();
-      orderedPackages.forEach(element =>{
-        if(!tempMap.has(element.Package2.Name)) tempMap.set(element.Package2.Name, []);
-        const versions = tempMap.get(element.Package2.Name);
+    const ordering: Ordering = new Ordering(this.flags.withrootpackage);
+    let orderedPackages = ordering.visitTree(rootNode);
+    if (this.flags.maxversion) {
+      const tempMap = new Map<string, Array<DependencyTreeNode<Package2Version>>>();
+      orderedPackages.forEach(element => {
+        if (!tempMap.has(element.nodeElement.Package2.Name)) tempMap.set(element.nodeElement.Package2.Name, []);
+        const versions = tempMap.get(element.nodeElement.Package2.Name);
         versions.push(element);
       });
-      const result: Package2Version[] = [];
-      tempMap.forEach((v: Package2Version[], k: String) => {
+      const result: Array<DependencyTreeNode<Package2Version>> = [];
+      tempMap.forEach((v: Array<DependencyTreeNode<Package2Version>>, k: string) => {
         result.push(v.sort((v2, v1) => {
-          return  v1.MajorVersion != v2.MajorVersion
-                  ? v1.MajorVersion - v2.MajorVersion
-                  : v1.MinorVersion != v2.MinorVersion
-                    ? v1.MinorVersion - v2.MinorVersion
-                    : v1.PatchVersion != v2.PatchVersion
-                      ? v1.PatchVersion - v2.PatchVersion
-                      : v1.BuildNumber - v2.BuildNumber
+          return  v1.nodeElement.MajorVersion !== v2.nodeElement.MajorVersion
+                  ? v1.nodeElement.MajorVersion - v2.nodeElement.MajorVersion
+                  : v1.nodeElement.MinorVersion !== v2.nodeElement.MinorVersion
+                    ? v1.nodeElement.MinorVersion - v2.nodeElement.MinorVersion
+                    : v1.nodeElement.PatchVersion !== v2.nodeElement.PatchVersion
+                      ? v1.nodeElement.PatchVersion - v2.nodeElement.PatchVersion
+                      : v1.nodeElement.BuildNumber - v2.nodeElement.BuildNumber;
                       })[0]
                     );
       });
       orderedPackages = result;
     }
     orderedPackages.forEach(element => {
-      const line: string = element.SubscriberPackageVersionId
-      + (this.flags.name    ? (':' + element.Package2.Name) : '')
-      + (this.flags.version ? (':' + element.MajorVersion
-                                    + '.' + element.MinorVersion
-                                    + '.' + element.PatchVersion
-                                    + '.' + element.BuildNumber) : '');
+      const line: string = element.nodeElement.SubscriberPackageVersionId
+      + (this.flags.name    ? (':' + element.nodeElement.Package2.Name) : '')
+      + (this.flags.version ? (':' + element.nodeElement.MajorVersion
+                                    + '.' + element.nodeElement.MinorVersion
+                                    + '.' + element.nodeElement.PatchVersion
+                                    + '.' + element.nodeElement.BuildNumber) : '');
       this.ux.log(line);
     });
     // Return an object to be displayed with --json
     return { dependency: 'order'};
-  }
-  private getOrderWithRoot(rootNode: DependencyTreeNode<Package2Version>, withRoot: boolean): Package2Version[]{
-    const result: Package2Version[] = [];
-    if(withRoot) result.push(rootNode.nodeElement);
-    rootNode.children.forEach(node => {
-      const nodeResult = this.getOrder(node)
-      nodeResult.forEach(el => result.push(el));
-    })
-    return result;
-  }
-  private getOrder(rootNode: DependencyTreeNode<Package2Version>): Package2Version[]{
-    const result: Package2Version[] = [];
-    result.push(rootNode.nodeElement);
-    rootNode.children.forEach(node => {
-      const nodeResult = this.getOrder(node)
-      nodeResult.forEach(el => result.push(el));
-    })
-    return result;
   }
 }
