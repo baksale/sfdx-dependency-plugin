@@ -52,10 +52,10 @@ sfdx-dependency-plugin 1.1.2
 ```
 <!-- usagestop -->
 <!-- commands -->
-* [`sfdx dependency:order [-p <string>] [-n] [--version] [-x] [-w] [-v <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-dependencyorder--p-string--n---version--x--w--v-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
-* [`sfdx dependency:tree [-p <string>] [-n] [--version] [--id] [-v <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-dependencytree--p-string--n---version---id--v-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx dependency:order`](#sfdx-dependencyorder)
+* [`sfdx dependency:tree`](#sfdx-dependencytree)
 
-## `sfdx dependency:order [-p <string>] [-n] [--version] [-x] [-w] [-v <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+## `sfdx dependency:order`
 
 view dependency tree for a package
 
@@ -96,7 +96,7 @@ EXAMPLE
 
 _See code: [lib\commands\dependency\order.js](https://github.com/baksale/sfdx-dependency-plugin/blob/v1.1.2/lib\commands\dependency\order.js)_
 
-## `sfdx dependency:tree [-p <string>] [-n] [--version] [--id] [-v <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+## `sfdx dependency:tree`
 
 view dependency tree for a package
 

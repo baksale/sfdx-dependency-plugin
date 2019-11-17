@@ -43,9 +43,10 @@ export default class Tree extends SfdxCommand {
   protected static flagsConfig = {
     // flag with a value (-p, --package=VALUE)
     package: flags.string({char: 'p', description: messages.getMessage('packageFlagDescription')}),
-    name: flags.boolean({char: 'n', description: messages.getMessage('nameFlagDescription'), default: true}),
-    version: flags.boolean({description: messages.getMessage('packageVersionDescription'), default: false}),
-    id: flags.boolean({description: messages.getMessage('idFlagDescription'), default: false})
+    withversion: flags.boolean({description: messages.getMessage('packageVersionDescription'), default: false}),
+    version: flags.boolean({description: messages.getMessage('packageVersionDescription'), default: false, deprecated: {to: 'withversion', message: '', version: '1.2'}}),
+    withid: flags.boolean({description: messages.getMessage('idFlagDescription'), default: false}),
+    id: flags.boolean({description: messages.getMessage('idFlagDescription'), default: false, deprecated: {to: 'withid', message: '', version: '1.2'}})
   };
 
   // Comment this out if your command does not require an org username
@@ -66,7 +67,7 @@ export default class Tree extends SfdxCommand {
     const dxPackages: Package2Version[] = await dependencyApi.getPackagesByIds([packageId]);
     const dxPackage: Package2Version = dxPackages[0];
     const rootNode: DependencyTreeNode<Package2Version> = await dependencyBuilder.buildDependencyTree(dxPackage);
-    const serializer = new DxPackageSerializer(this.flags.name, this.flags.version, this.flags.id);
+    const serializer = new DxPackageSerializer(this.flags.version || this.flags.withversion, this.flags.id || this.flags.withid);
     const visitor: Serializing = new Serializing(serializer);
     this.ux.log(visitor.visitTree(rootNode));
     // Return an object to be displayed with --json
