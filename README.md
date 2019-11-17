@@ -31,31 +31,23 @@ sfdx-dependency-plugin 1.1.2
 ...
 ```
 <!-- usage -->
-```bash
-$ sfdx dependency:tree -p 04t00..
-  $ sfdx dependency:tree --targetdevhubusername devhub@org.com --package '04t0..'
-Main Package
-+- 1st Level Pacakge 1
-|  +- 2nd Level Package 1
-|  +- 2nd Level Package 2
-|  |  \- 3rd Level Package only
-|  \- 2nd Level Package last
-\- 1st Level Pacakge 2
-...
-$ sfdx dependency:order -p 04t00..
-sfdx-dependency-plugin 1.1.2
-04t01..
-04t02..
-04t03..
-04t04..
+```sh-session
+$ npm install -g sfdx-dependency-plugin
+$ sfdx COMMAND
+running command...
+$ sfdx (-v|--version|version)
+sfdx-dependency-plugin/1.1.3 win32-x64 node-v12.13.0
+$ sfdx --help [COMMAND]
+USAGE
+  $ sfdx COMMAND
 ...
 ```
 <!-- usagestop -->
 <!-- commands -->
-* [`sfdx dependency:order`](#sfdx-dependencyorder)
-* [`sfdx dependency:tree`](#sfdx-dependencytree)
+* [`sfdx dependency:order [-p <string>] [-n] [--version] [-x] [-w] [-v <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-dependencyorder--p-string--n---version--x--w--v-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx dependency:tree [-p <string>] [--withversion] [--version] [--withid] [--id] [-v <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-dependencytree--p-string---withversion---version---withid---id--v-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
 
-## `sfdx dependency:order`
+## `sfdx dependency:order [-p <string>] [-n] [--version] [-x] [-w] [-v <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 view dependency tree for a package
 
@@ -94,19 +86,18 @@ EXAMPLE
     04t04..
 ```
 
-_See code: [lib\commands\dependency\order.js](https://github.com/baksale/sfdx-dependency-plugin/blob/v1.1.2/lib\commands\dependency\order.js)_
+_See code: [lib\commands\dependency\order.js](https://github.com/baksale/sfdx-dependency-plugin/blob/v1.1.3/lib\commands\dependency\order.js)_
 
-## `sfdx dependency:tree`
+## `sfdx dependency:tree [-p <string>] [--withversion] [--version] [--withid] [--id] [-v <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 view dependency tree for a package
 
 ```
 USAGE
-  $ sfdx dependency:tree [-p <string>] [-n] [--version] [--id] [-v <string>] [--apiversion <string>] [--json] 
-  [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+  $ sfdx dependency:tree [-p <string>] [--withversion] [--version] [--withid] [--id] [-v <string>] [--apiversion 
+  <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -n, --name                                                                        displays package name
   -p, --package=package                                                             package id to view dependencies for
 
   -v, --targetdevhubusername=targetdevhubusername                                   username or alias for the dev hub
@@ -123,6 +114,10 @@ OPTIONS
                                                                                     this command invocation
 
   --version                                                                         displays package version
+
+  --withid                                                                          displays package id
+
+  --withversion                                                                     displays package version
 
 EXAMPLES
   $ sfdx dependency:tree --targetdevhubusername devhub@org.com --package '04t0..'
@@ -142,5 +137,5 @@ EXAMPLES
      \- 2nd Level Package last:E
 ```
 
-_See code: [lib\commands\dependency\tree.js](https://github.com/baksale/sfdx-dependency-plugin/blob/v1.1.2/lib\commands\dependency\tree.js)_
+_See code: [lib\commands\dependency\tree.js](https://github.com/baksale/sfdx-dependency-plugin/blob/v1.1.3/lib\commands\dependency\tree.js)_
 <!-- commandsstop -->
