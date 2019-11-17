@@ -1,7 +1,10 @@
 sfdx-dependency-plugin
 ======================
 
-To work with DX Package Dependcies
+This sfdx plugin will help you with DX Package dependencies management.  
+List of supported features:  
+* visualize all dependencies(including transitive dependencies) for a package as a tree
+* list all dependencies for a package in the installation order
 
 [![Version](https://img.shields.io/npm/v/sfdx-dependency-plugin.svg)](https://npmjs.org/package/sfdx-dependency-plugin)
 [![CircleCI](https://circleci.com/gh/baksale/sfdx-dependency-plugin/tree/master.svg?style=shield)](https://circleci.com/gh/baksale/sfdx-dependency-plugin/tree/master)
@@ -16,16 +19,35 @@ To work with DX Package Dependcies
 
 <!-- tocstop -->
 <!-- install -->
+```bash
+$ sfdx plugins:install sfdx-dependency-plugin
+This plugin is not digitally signed and its authenticity cannot be verified. Continue installation y/n?: y
+Finished digital signature check.
+...
+Installing plugin sfdx-dependency-plugin... installed v1.1.2
+
+$ sfdx plugins
+sfdx-dependency-plugin 1.1.2
+...
+```
 <!-- usage -->
-```sh-session
-$ npm install -g sfdx-dependency-plugin
-$ sfdx COMMAND
-running command...
-$ sfdx (-v|--version|version)
-sfdx-dependency-plugin/1.1.2 win32-x64 node-v12.13.0
-$ sfdx --help [COMMAND]
-USAGE
-  $ sfdx COMMAND
+```bash
+$ sfdx dependency:tree -p 04t00..
+  $ sfdx dependency:tree --targetdevhubusername devhub@org.com --package '04t0..'
+Main Package
++- 1st Level Pacakge 1
+|  +- 2nd Level Package 1
+|  +- 2nd Level Package 2
+|  |  \- 3rd Level Package only
+|  \- 2nd Level Package last
+\- 1st Level Pacakge 2
+...
+$ sfdx dependency:order -p 04t00..
+sfdx-dependency-plugin 1.1.2
+04t01..
+04t02..
+04t03..
+04t04..
 ...
 ```
 <!-- usagestop -->
