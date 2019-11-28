@@ -4,6 +4,7 @@ import { AnyJson } from '@salesforce/ts-types';
 import { DependencyTreeBuilder } from 'any-dependency-tree/dist';
 import { DependencyTreeNode } from 'any-dependency-tree/dist/dependencyTreeNode';
 import { Serializing } from 'any-dependency-tree/dist/visitor/serializing';
+import { DxPackageFilter } from '../../lib/dxPackageFilter';
 import { DxPackageSerializer } from '../../lib/dxPackageSerializer';
 import { Package2Version } from '../../lib/model';
 import { PackageDependencyApi } from '../../lib/packageDependency';
@@ -43,9 +44,11 @@ export default class Tree extends SfdxCommand {
   protected static flagsConfig = {
     // flag with a value (-p, --package=VALUE)
     package: flags.string({char: 'p', description: messages.getMessage('packageFlagDescription')}),
-    name: flags.boolean({char: 'n', description: messages.getMessage('nameFlagDescription'), default: true}),
-    version: flags.boolean({description: messages.getMessage('packageVersionDescription'), default: false}),
-    id: flags.boolean({description: messages.getMessage('idFlagDescription'), default: false})
+    filter: flags.string({char: 'f', description: messages.getMessage('filterFlagDescription')}),
+    withversion: flags.boolean({description: messages.getMessage('packageVersionDescription'), default: false}),
+    version: flags.boolean({description: messages.getMessage('packageVersionDescription'), default: false}), // , deprecated: {to: 'withversion', message: '', version: '1.2'}
+    withid: flags.boolean({description: messages.getMessage('idFlagDescription'), default: false}),
+    id: flags.boolean({description: messages.getMessage('idFlagDescription'), default: false}) // , deprecated: {to: 'withid', message: '', version: '1.2'}
   };
 
   // Comment this out if your command does not require an org username
@@ -59,15 +62,17 @@ export default class Tree extends SfdxCommand {
 
   public async run(): Promise<AnyJson> {
     let packageId: string = this.flags.package;
+    let packageFilter: string = this.flags.filter;
     if (packageId == null) { return {errorMessage: messages.getMessage('errorNoPackageProvided')}; }
     packageId = packageId.replace('\'', '').replace('\'', '');
+    if(packageFilter) packageFilter = packageFilter.replace('\'', '').replace('\'', '');
     const dependencyApi = new PackageDependencyApi(this.hubOrg.getConnection());
     const dependencyBuilder = new DependencyTreeBuilder<Package2Version>(dependencyApi);
     const dxPackages: Package2Version[] = await dependencyApi.getPackagesByIds([packageId]);
     const dxPackage: Package2Version = dxPackages[0];
     const rootNode: DependencyTreeNode<Package2Version> = await dependencyBuilder.buildDependencyTree(dxPackage);
-    const serializer = new DxPackageSerializer(this.flags.name, this.flags.version, this.flags.id);
-    const visitor: Serializing = new Serializing(serializer);
+    const serializer = new DxPackageSerializer(this.flags.version || this.flags.withversion, this.flags.id || this.flags.withid);
+    const visitor: Serializing = new Serializing(serializer, false, new DxPackageFilter(packageFilter));
     this.ux.log(visitor.visitTree(rootNode));
     // Return an object to be displayed with --json
     return new Serializing(serializer, true).visitTree(rootNode);

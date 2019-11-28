@@ -1,7 +1,7 @@
 {
   "name": "sfdx-dependency-plugin",
   "description": "To work with DX Package Dependcies",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "author": "java.rabota@gmail.com",
   "bugs": "https://github.com/baksale/sfdx-dependency-plugin/issues",
   "dependencies": {
@@ -10,7 +10,7 @@
     "@oclif/errors": "^1",
     "@salesforce/command": "^2",
     "@salesforce/core": "^2",
-    "any-dependency-tree": "^1",
+    "any-dependency-tree": "1.1.0",
     "tslib": "^1"
   },
   "devDependencies": {
