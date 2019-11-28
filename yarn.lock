@@ -405,10 +405,10 @@ ansicolors@~0.3.2:
   resolved "https://registry.yarnpkg.com/ansicolors/-/ansicolors-0.3.2.tgz#665597de86a9ffe3aa9bfbe6cae5c6ea426b4979"
   integrity sha1-ZlWX3oap/+Oqm/vmyuXG6kJrSXk=
 
-any-dependency-tree@^1:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/any-dependency-tree/-/any-dependency-tree-1.0.0.tgz#88c9e38fa9129b69e8315f312032329b777508d7"
-  integrity sha512-b9XNSk904CAmW9y2fGPXlm1QFwhyTQOjNoSo2zn6RRLtjIk9Bp3Tt/MXrxHwLfi9O4RxAj5HAtMcpzxdO1Klfg==
+any-dependency-tree@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/any-dependency-tree/-/any-dependency-tree-1.1.0.tgz#be0e77a1ed920be2727b26b623c428bfc5943aea"
+  integrity sha512-kgZzXaPoq0YSbgUkltMBKesMQefGw5uDcHX5wtarfVdFXVOS6YZJn4sojAx6RWPKQNkHfYkZ56tfSNuBHegB4g==
 
 append-transform@^1.0.0:
   version "1.0.0"
@@ -2843,10 +2843,10 @@ treeify@^1.1.0:
   resolved "https://registry.yarnpkg.com/treeify/-/treeify-1.1.0.tgz#4e31c6a463accd0943879f30667c4fdaff411bb8"
   integrity sha512-1m4RA7xVAJrSGrrXGs0L3YTwyvBs2S8PbRHaLZAkFw7JR8oIFwYtysxlBZhYIa7xSyiYJKZ3iGrrk55cGA3i9A==
 
-ts-node@^8:
-  version "8.4.1"
-  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-8.4.1.tgz#270b0dba16e8723c9fa4f9b4775d3810fd994b4f"
-  integrity sha512-5LpRN+mTiCs7lI5EtbXmF/HfMeCjzt7DH9CZwtkr6SywStrNQC723wG+aOWFiLNn7zT3kD/RnFqi3ZUfr4l5Qw==
+ts-node@^8.5.4:
+  version "8.5.4"
+  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-8.5.4.tgz#a152add11fa19c221d0b48962c210cf467262ab2"
+  integrity sha512-izbVCRV68EasEPQ8MSIGBNK9dc/4sYJJKYA+IarMQct1RtEot6Xp0bXuClsbUSnKpg50ho+aOAx8en5c+y4OFw==
   dependencies:
     arg "^4.1.0"
     diff "^4.0.1"
