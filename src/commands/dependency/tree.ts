@@ -4,10 +4,10 @@ import { AnyJson } from '@salesforce/ts-types';
 import { DependencyTreeBuilder } from 'any-dependency-tree/dist';
 import { DependencyTreeNode } from 'any-dependency-tree/dist/dependencyTreeNode';
 import { Serializing } from 'any-dependency-tree/dist/visitor/serializing';
+import { DxPackageFilter } from '../../lib/dxPackageFilter';
 import { DxPackageSerializer } from '../../lib/dxPackageSerializer';
 import { Package2Version } from '../../lib/model';
 import { PackageDependencyApi } from '../../lib/packageDependency';
-import { DxPackageFilter } from '../../lib/dxPackageFilter';
 
 // Initialize Messages with the current plugin directory
 Messages.importMessagesDirectory(__dirname);
