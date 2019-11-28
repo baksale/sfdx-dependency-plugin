@@ -6,5 +6,6 @@
   "nameFlagDescription" : "displays package name",
   "idFlagDescription" : "displays package id",
   "maxVersionFlagDescription" : "displays max version only",
-  "withRootPackageFlagDescription" : "includes root package into the final list"
+  "withRootPackageFlagDescription" : "includes root package into the final list",
+  "filterFlagDescription" : "filter packages by mask but includes parent packages"
 }
