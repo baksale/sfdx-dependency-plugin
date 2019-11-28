@@ -65,7 +65,7 @@ export default class Tree extends SfdxCommand {
     let packageFilter: string = this.flags.filter;
     if (packageId == null) { return {errorMessage: messages.getMessage('errorNoPackageProvided')}; }
     packageId = packageId.replace('\'', '').replace('\'', '');
-    packageFilter = packageFilter.replace('\'', '').replace('\'', '');
+    if(packageFilter) packageFilter = packageFilter.replace('\'', '').replace('\'', '');
     const dependencyApi = new PackageDependencyApi(this.hubOrg.getConnection());
     const dependencyBuilder = new DependencyTreeBuilder<Package2Version>(dependencyApi);
     const dxPackages: Package2Version[] = await dependencyApi.getPackagesByIds([packageId]);
