@@ -405,10 +405,10 @@ ansicolors@~0.3.2:
   resolved "https://registry.yarnpkg.com/ansicolors/-/ansicolors-0.3.2.tgz#665597de86a9ffe3aa9bfbe6cae5c6ea426b4979"
   integrity sha1-ZlWX3oap/+Oqm/vmyuXG6kJrSXk=
 
-any-dependency-tree@^1:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/any-dependency-tree/-/any-dependency-tree-1.0.0.tgz#88c9e38fa9129b69e8315f312032329b777508d7"
-  integrity sha512-b9XNSk904CAmW9y2fGPXlm1QFwhyTQOjNoSo2zn6RRLtjIk9Bp3Tt/MXrxHwLfi9O4RxAj5HAtMcpzxdO1Klfg==
+any-dependency-tree@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/any-dependency-tree/-/any-dependency-tree-2.0.0.tgz#4d15f94182b2b0183c7aa3343b5766fd7857eb8c"
+  integrity sha512-ENiwxUfk0Sf6ZnFZBO5Bdk4igL+RN1AXTnysJxnkMgJiYTKGz1wv1tA7U73GXWTzliFRt45mXn6rLTKYdiXHaQ==
 
 append-transform@^1.0.0:
   version "1.0.0"
