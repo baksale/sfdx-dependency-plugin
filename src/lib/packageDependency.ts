@@ -17,7 +17,7 @@ export class PackageDependencyApi implements EntityDependencyApi<Package2Version
 
     public async getPackagesByIds(packageIds: string[]): Promise<Package2Version[]> {
         const result: Package2Version[] = [];
-        if(packageIds.length === 0) return result;
+        if (packageIds.length === 0) return result;
         const missingPackageIds: string[] = [];
         packageIds.forEach(id => {
             if (!this.packages.has(id)) missingPackageIds.push('\'' + id + '\'');

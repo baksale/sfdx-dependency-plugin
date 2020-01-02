@@ -3,7 +3,7 @@ import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import { DependencyTreeBuilder } from 'any-dependency-tree/dist';
 import { DependencyTreeNode } from 'any-dependency-tree/dist/dependencyTreeNode';
-import { Ordering } from 'any-dependency-tree/dist/visitor/ordering';
+import { OrderingVisitor } from 'any-dependency-tree/dist/visitor/ordering';
 import { Package2Version } from '../../lib/model';
 import { PackageDependencyApi } from '../../lib/packageDependency';
 
@@ -14,7 +14,7 @@ Messages.importMessagesDirectory(__dirname);
 // or any library that is using the messages framework can also be loaded this way.
 const messages = Messages.loadMessages('sfdx-dependency-plugin', 'org');
 
-export default class Tree extends SfdxCommand {
+export default class Order extends SfdxCommand {
 
   public static description = messages.getMessage('commandDescription');
 
@@ -56,7 +56,7 @@ export default class Tree extends SfdxCommand {
     const dxPackages: Package2Version[] = await dependencyApi.getPackagesByIds([packageId]);
     const dxPackage: Package2Version = dxPackages[0];
     const rootNode: DependencyTreeNode<Package2Version> = await dependencyBuilder.buildDependencyTree(dxPackage);
-    const ordering: Ordering = new Ordering(this.flags.withrootpackage);
+    const ordering: OrderingVisitor = new OrderingVisitor(this.flags.withrootpackage);
     let orderedPackages = ordering.visitTree(rootNode);
     if (this.flags.maxversion) {
       const tempMap = new Map<string, Array<DependencyTreeNode<Package2Version>>>();
