@@ -24,7 +24,7 @@ describe('displays dependencies from the project json file', () => {
             return Promise.resolve({ records: [] });
           })
         .stdout()
-        .command(['dependency:project:tree', '--targetdevhubusername', 'test@mail.db.com'])
+        .command(['dependency:project:tree', '--targetusername', 'test@mail.db.com'])
         .it('', ctx => {
             expect(ctx.stdout).to.contain('+- A');
             expect(ctx.stdout).to.contain('\\- B');
@@ -45,8 +45,9 @@ describe('includes dependencies versions in the output given withversion flag', 
     };
     test
         .withProject(ensureJsonMap(projectJson))
+        .withOrg({username: 'test@mail.db.com', isDevHub: true}, true)
         .stdout()
-        .command(['dependency:project:tree', '--withversion'])
+        .command(['dependency:project:tree', '--targetusername', 'test@mail.db.com', '--withversion'])
         .it('', ctx => {
             expect(ctx.stdout).to.contain('+- A:1.0.0.3');
             expect(ctx.stdout).to.contain('\\- B:2.0.0.4');
@@ -62,13 +63,24 @@ describe('resolves "LATEST" placeholder given withversion flag', () => {
                     {package: 'A', versionNumber: '1.0.0.LATEST'}
                 ]
             }
-        ]
+        ],
+        packageAliases: {
+            ['A']: '04H123'
+        }
     };
     test
         .withProject(ensureJsonMap(projectJson))
+        .withOrg({username: 'test@mail.db.com', isDevHub: true}, true)
+        .withConnectionRequest(request => {
+            const requestMap = ensureJsonMap(request);
+            if (ensureString(requestMap.url).match('max')) {
+              return Promise.resolve({ records: [ { latestbuildnumber: 3}] });
+            }
+            return Promise.resolve({ records: [ {Package2: {Name: 'A'}, MajorVersion: '1', MinorVersion: '0', PatchVersion: '0', BuildNumber: '3' } ]});
+          })
         .stdout()
-        .command(['dependency:project:tree', '--withversion'])
+        .command(['dependency:project:tree', '--targetusername', 'test@mail.db.com', '--withversion'])
         .it('', ctx => {
-            expect(ctx.stdout).to.contain('+- A:1.0.0.3');
+            expect(ctx.stdout).to.contain('\\- A:1.0.0.3');
         });
 });

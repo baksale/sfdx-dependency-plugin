@@ -66,15 +66,15 @@ export class PackageDependencyApi implements EntityDependencyApi<Package2Version
         return result;
     }
     public async getLatestPackageVersion(package2Id: string, majorVersion: string, minorVersion: string, patchVersion: string): Promise<Package2Version> {
-        const maxBuildVersionQuery = this.maxBuildVersionQuery
+        const internalMaxBuildVersionQuery = this.maxBuildVersionQuery
             .replace('%i', package2Id)
             .replace('%m', majorVersion)
             .replace('%n', minorVersion)
             .replace('%p', patchVersion);
-        let maxBuildVersion: string;
-        await this.connection.tooling.query<AnyJson>(maxBuildVersionQuery)
+        let maxBuildVersion: string = null;
+        await this.connection.tooling.query<AnyJson>(internalMaxBuildVersionQuery)
             .then(maxBuildVersionQueryResult => {
-                maxBuildVersionQueryResult.records.forEach(maxBuildVersionElement => {
+                maxBuildVersionQueryResult.records.some(maxBuildVersionElement => {
                     maxBuildVersion = maxBuildVersionElement['latestbuildnumber'];
                 });
             });

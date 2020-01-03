@@ -23,7 +23,7 @@ export interface Package2Version {
     SubscriberPackageVersionId?: string;
     Name?: string;
     Package2: Package2;
-    Description? : string;
+    Description?: string;
     Tag?: string;
     Branch?: string;
     MajorVersion?: number;

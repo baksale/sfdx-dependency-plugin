@@ -49,18 +49,24 @@ export default class Tree extends SfdxCommand {
     const rootElement: Package2Version = {Package2: rootPackage};
     const rootNode: DependencyTreeNode<Package2Version> = new DependencyTreeNode(rootElement);
     for (const dependency of dependencies) {
-      const versionElements: string[] = dependency.versionNumber.split('\.', 4);
-      if ('LATEST' === versionElements[3]) {
-        const childElement: Package2Version = await dependencyApi.getLatestPackageVersion(project.packageAliases[dependency.package], versionElements[0], versionElements[1], versionElements[2]);
-        // tslint:disable-next-line: no-unused-expression
-        new DependencyTreeNode(childElement, rootNode);
+      if (this.flags.withversion) {
+        const versionElements: string[] = dependency.versionNumber.split('\.', 4);
+        if ('LATEST' === versionElements[3]) {
+          const childElement: Package2Version = await dependencyApi.getLatestPackageVersion(project.packageAliases[dependency.package], versionElements[0], versionElements[1], versionElements[2]);;
+          // tslint:disable-next-line: no-unused-expression
+          new DependencyTreeNode(childElement, rootNode);
+        } else {
+          const childElement: Package2Version = {Package2: {Name: dependency.package},
+            MajorVersion: Number.parseInt(versionElements[0], 10),
+            MinorVersion: Number.parseInt(versionElements[1], 10),
+            PatchVersion: Number.parseInt(versionElements[2], 10),
+            BuildNumber: Number.parseInt(versionElements[3], 10)};
+          // tslint:disable-next-line: no-unused-expression
+          new DependencyTreeNode(childElement, rootNode);
+        }
       } else {
-        const childElement: Package2Version = {Package2: {Name: dependency.package},
-          MajorVersion: Number.parseInt(versionElements[0], 10),
-          MinorVersion: Number.parseInt(versionElements[1], 10),
-          PatchVersion: Number.parseInt(versionElements[2], 10),
-          BuildNumber: Number.parseInt(versionElements[3], 10)};
-        // tslint:disable-next-line: no-unused-expression
+        const childElement: Package2Version = {Package2: {Name: dependency.package}};
+          // tslint:disable-next-line: no-unused-expression
         new DependencyTreeNode(childElement, rootNode);
       }
     }
