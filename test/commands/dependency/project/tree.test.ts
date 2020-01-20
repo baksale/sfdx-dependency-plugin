@@ -15,14 +15,7 @@ describe('displays dependencies from the project json file', () => {
     };
     test
         .withProject(ensureJsonMap(projectJson))
-        .withOrg({username: 'test@mail.db.com', devHubUsername: 'test@mail.db.com', isDevHub: true}, true)
-        .withConnectionRequest(request => {
-            const requestMap = ensureJsonMap(request);
-            if (ensureString(requestMap.url).match(/Organization/)) {
-              return Promise.resolve({ records: [ { Name: 'Super Awesome Org', TrialExpirationDate: '2018-03-20T23:24:11.000+0000'}] });
-            }
-            return Promise.resolve({ records: [] });
-          })
+        .withOrg({username: 'test@mail.db.com', isDevHub: true}, true)
         .stdout()
         .command(['dependency:project:tree', '--targetusername', 'test@mail.db.com'])
         .it('', ctx => {

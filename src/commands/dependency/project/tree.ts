@@ -52,7 +52,7 @@ export default class Tree extends SfdxCommand {
       if (this.flags.withversion) {
         const versionElements: string[] = dependency.versionNumber.split('\.', 4);
         if ('LATEST' === versionElements[3]) {
-          const childElement: Package2Version = await dependencyApi.getLatestPackageVersion(project.packageAliases[dependency.package], versionElements[0], versionElements[1], versionElements[2]);;
+          const childElement: Package2Version = await dependencyApi.getLatestPackageVersion(project.packageAliases[dependency.package], versionElements[0], versionElements[1], versionElements[2]);
           // tslint:disable-next-line: no-unused-expression
           new DependencyTreeNode(childElement, rootNode);
         } else {
