@@ -3,7 +3,7 @@ import { Messages } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 import { DependencyTreeBuilder } from 'any-dependency-tree/dist';
 import { DependencyTreeNode } from 'any-dependency-tree/dist/dependencyTreeNode';
-import { Serializing } from 'any-dependency-tree/dist/visitor/serializing';
+import { SerializingVisitor } from 'any-dependency-tree/dist/visitor/serializing';
 import { DxPackageFilter } from '../../lib/dxPackageFilter';
 import { DxPackageSerializer } from '../../lib/dxPackageSerializer';
 import { Package2Version } from '../../lib/model';
@@ -65,16 +65,16 @@ export default class Tree extends SfdxCommand {
     let packageFilter: string = this.flags.filter;
     if (packageId == null) { return {errorMessage: messages.getMessage('errorNoPackageProvided')}; }
     packageId = packageId.replace('\'', '').replace('\'', '');
-    if(packageFilter) packageFilter = packageFilter.replace('\'', '').replace('\'', '');
+    if (packageFilter) packageFilter = packageFilter.replace('\'', '').replace('\'', '');
     const dependencyApi = new PackageDependencyApi(this.hubOrg.getConnection());
     const dependencyBuilder = new DependencyTreeBuilder<Package2Version>(dependencyApi);
     const dxPackages: Package2Version[] = await dependencyApi.getPackagesByIds([packageId]);
     const dxPackage: Package2Version = dxPackages[0];
     const rootNode: DependencyTreeNode<Package2Version> = await dependencyBuilder.buildDependencyTree(dxPackage);
     const serializer = new DxPackageSerializer(this.flags.version || this.flags.withversion, this.flags.id || this.flags.withid);
-    const visitor: Serializing = new Serializing(serializer, false, new DxPackageFilter(packageFilter));
+    const visitor: SerializingVisitor = new SerializingVisitor(serializer, new DxPackageFilter(packageFilter));
     this.ux.log(visitor.visitTree(rootNode));
     // Return an object to be displayed with --json
-    return new Serializing(serializer, true).visitTree(rootNode);
+    return new SerializingVisitor(serializer).visitTree(rootNode);
   }
 }

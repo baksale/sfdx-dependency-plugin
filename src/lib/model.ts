@@ -17,27 +17,27 @@ export interface Attributes {
 }
 
 export interface Package2Version {
-    attributes: Attributes;
-    Id: string;
-    Package2Id: string;
-    SubscriberPackageVersionId: string;
-    Name: string;
+    attributes?: Attributes;
+    Id?: string;
+    Package2Id?: string;
+    SubscriberPackageVersionId?: string;
+    Name?: string;
     Package2: Package2;
-    Description? : string;
+    Description?: string;
     Tag?: string;
     Branch?: string;
-    MajorVersion: number;
-    MinorVersion: number;
-    PatchVersion: number;
-    BuildNumber: number;
-    IsRelease: boolean;
-    CreatedDate: string;
-    LasteModifiedDate: string;
-    IsPasswordProtected: boolean;
+    MajorVersion?: number;
+    MinorVersion?: number;
+    PatchVersion?: number;
+    BuildNumber?: number;
+    IsRelease?: boolean;
+    CreatedDate?: string;
+    LasteModifiedDate?: string;
+    IsPasswordProtected?: boolean;
 }
 
 export interface Package2 {
-    attributes: Attributes;
+    attributes?: Attributes;
     Name: string;
     NamespacePrefix?: string;
 }

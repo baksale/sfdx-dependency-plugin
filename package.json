@@ -10,7 +10,7 @@
     "@oclif/errors": "^1",
     "@salesforce/command": "^2",
     "@salesforce/core": "^2",
-    "any-dependency-tree": "1.1.0",
+    "any-dependency-tree": "2.1.2",
     "tslib": "^1"
   },
   "devDependencies": {
@@ -48,8 +48,8 @@
     "commands": "./lib/commands",
     "bin": "sfdx",
     "topics": {
-      "hello": {
-        "description": "Commands to say hello."
+      "dependency": {
+        "description": "Commands to work with sfdx package dependencies."
       }
     },
     "devPlugins": [
