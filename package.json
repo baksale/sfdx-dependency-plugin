@@ -19,7 +19,7 @@
     "@oclif/test": "^1",
     "@salesforce/dev-config": "^1",
     "@types/chai": "^4",
-    "@types/mocha": "^5",
+    "@types/mocha": "^7.0.0",
     "@types/node": "^12.12.8",
     "chai": "^4",
     "globby": "^10.0.1",
