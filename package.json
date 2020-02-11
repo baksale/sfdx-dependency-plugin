@@ -9,7 +9,7 @@
     "@oclif/config": "^1",
     "@oclif/errors": "^1",
     "@salesforce/command": "^2",
-    "@salesforce/core": "^2",
+    "@salesforce/core": "2.1.6",
     "any-dependency-tree": "2.1.2",
     "tslib": "^1"
   },
