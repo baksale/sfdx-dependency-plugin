@@ -3,8 +3,7 @@ import { Messages } from '@salesforce/core';
 import { AnyJson, JsonMap } from '@salesforce/ts-types';
 import { DependencyTreeBuilder } from 'any-dependency-tree/dist';
 import { DependencyTreeNode } from 'any-dependency-tree/dist/dependencyTreeNode';
-import { SerializingVisitor } from 'any-dependency-tree/dist/visitor/serializing';
-import { DxPackageSerializer } from '../../../lib/dxPackageSerializer';
+import { OrderingVisitor } from 'any-dependency-tree/dist/visitor/ordering';
 import { Package2, Package2Version } from '../../../lib/model';
 import { PackageDependencyApi } from '../../../lib/packageDependency';
 import { PackageDirectoryDependency, SfdxProjectModel } from '../../../lib/projectModel';
@@ -16,17 +15,25 @@ Messages.importMessagesDirectory(__dirname);
 // or any library that is using the messages framework can also be loaded this way.
 const messages = Messages.loadMessages('sfdx-dependency-plugin', 'org');
 
-export default class Tree extends SfdxCommand {
+export default class Order extends SfdxCommand {
 
   public static description = messages.getMessage('commandDescription');
 
-  public static examples = [];
+  public static examples = [
+  `$ sfdx dependency:order --package '04t0..'
+ 04t01..
+ 04t02..
+ 04t03..
+ 04t04..
+  `
+  ];
 
   public static args = [{name: 'file'}];
 
   protected static flagsConfig = {
     // flag with a value (-p, --package=VALUE)
-    withversion: flags.boolean({description: messages.getMessage('packageVersionDescription'), default: false})
+    version: flags.boolean({description: messages.getMessage('packageVersionDescription'), default: false}),
+    maxversion: flags.boolean({char: 'x', description: messages.getMessage('maxVersionFlagDescription'), default: false})
   };
 
   // Comment this out if your command does not require an org username
@@ -66,9 +73,40 @@ export default class Tree extends SfdxCommand {
         new DependencyTreeNode(childElement, rootNode);
       }
     }
-    const serializer = new DxPackageSerializer(this.flags.withversion, false);
-    const visitor: SerializingVisitor = new SerializingVisitor(serializer);
-    this.ux.log(visitor.visitTree(rootNode));
-    return 'empty';
+    const ordering: OrderingVisitor = new OrderingVisitor(false);
+    let orderedPackages = ordering.visitTree(rootNode);
+    if (this.flags.maxversion) {
+      const tempMap = new Map<string, Array<DependencyTreeNode<Package2Version>>>();
+      orderedPackages.forEach(element => {
+        if (!tempMap.has(element.nodeElement.Package2.Name)) tempMap.set(element.nodeElement.Package2.Name, []);
+        const versions = tempMap.get(element.nodeElement.Package2.Name);
+        versions.push(element);
+      });
+      const result: Array<DependencyTreeNode<Package2Version>> = [];
+      tempMap.forEach((v: Array<DependencyTreeNode<Package2Version>>, k: string) => {
+        result.push(v.sort((v2, v1) => {
+          return  v1.nodeElement.MajorVersion !== v2.nodeElement.MajorVersion
+                  ? v1.nodeElement.MajorVersion - v2.nodeElement.MajorVersion
+                  : v1.nodeElement.MinorVersion !== v2.nodeElement.MinorVersion
+                    ? v1.nodeElement.MinorVersion - v2.nodeElement.MinorVersion
+                    : v1.nodeElement.PatchVersion !== v2.nodeElement.PatchVersion
+                      ? v1.nodeElement.PatchVersion - v2.nodeElement.PatchVersion
+                      : v1.nodeElement.BuildNumber - v2.nodeElement.BuildNumber;
+                      })[0]
+                    );
+      });
+      orderedPackages = result;
+    }
+    orderedPackages.forEach(element => {
+      const line: string = element.nodeElement.SubscriberPackageVersionId
+      + (this.flags.name    ? (':' + element.nodeElement.Package2.Name) : '')
+      + (this.flags.version ? (':' + element.nodeElement.MajorVersion
+                                    + '.' + element.nodeElement.MinorVersion
+                                    + '.' + element.nodeElement.PatchVersion
+                                    + '.' + element.nodeElement.BuildNumber) : '');
+      this.ux.log(line);
+    });
+    // Return an object to be displayed with --json
+    return { dependency: 'order'};
   }
 }

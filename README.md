@@ -116,6 +116,8 @@ OPTIONS
   --withversion                                                                     displays package version
 ```
 
+_See code: [lib\commands\dependency\project\tree.js](https://github.com/baksale/sfdx-dependency-plugin/blob/v1.3.0/lib\commands\dependency\project\tree.js)_
+
 ## `sfdx dependency:tree [-p <string>] [-f <string>] [--withversion] [--version] [--withid] [--id] [-v <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 view dependency tree for a package
