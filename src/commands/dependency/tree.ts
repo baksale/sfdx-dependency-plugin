@@ -4,9 +4,9 @@ import { AnyJson } from '@salesforce/ts-types';
 import { DependencyTreeBuilder } from 'any-dependency-tree/dist';
 import { DependencyTreeNode } from 'any-dependency-tree/dist/dependencyTreeNode';
 import { SerializingVisitor } from 'any-dependency-tree/dist/visitor/serializing';
+import { Package2Version } from 'dx-package-api/lib/main';
 import { DxPackageFilter } from '../../lib/dxPackageFilter';
 import { DxPackageSerializer } from '../../lib/dxPackageSerializer';
-import { Package2Version } from '../../lib/model';
 import { PackageDependencyApi } from '../../lib/packageDependency';
 
 // Initialize Messages with the current plugin directory

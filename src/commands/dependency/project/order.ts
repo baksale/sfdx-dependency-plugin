@@ -4,7 +4,7 @@ import { AnyJson, JsonMap } from '@salesforce/ts-types';
 import { DependencyTreeBuilder } from 'any-dependency-tree/dist';
 import { DependencyTreeNode } from 'any-dependency-tree/dist/dependencyTreeNode';
 import { OrderingVisitor } from 'any-dependency-tree/dist/visitor/ordering';
-import { Package2, Package2Version } from '../../../lib/model';
+import { Package2, Package2Version } from 'dx-package-api/lib/main';
 import { PackageDependencyApi } from '../../../lib/packageDependency';
 import { PackageDirectoryDependency, SfdxProjectModel } from '../../../lib/projectModel';
 

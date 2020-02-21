@@ -1,6 +1,6 @@
 import { DependencyTreeNode } from 'any-dependency-tree/dist/dependencyTreeNode';
 import { Serializer } from 'any-dependency-tree/dist/serializer';
-import { Package2Version } from './model';
+import { Package2Version } from 'dx-package-api/lib/main';
 
 export class DxPackageSerializer implements Serializer<Package2Version> {
     public constructor(
