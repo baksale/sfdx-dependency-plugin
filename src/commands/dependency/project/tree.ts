@@ -1,4 +1,4 @@
-import { flags, SfdxCommand, UX } from '@salesforce/command';
+import { flags, SfdxCommand} from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson, JsonMap } from '@salesforce/ts-types';
 import { DependencyTreeBuilder } from 'any-dependency-tree/dist';
