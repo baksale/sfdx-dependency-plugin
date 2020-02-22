@@ -32,6 +32,8 @@ export default class Order extends SfdxCommand {
 
   protected static flagsConfig = {
     // flag with a value (-p, --package=VALUE)
+    name: flags.boolean({char: 'n', description: messages.getMessage('nameFlagDescription'), default: false}),
+    withrootpackage: flags.boolean({char: 'w', description: messages.getMessage('withRootPackageFlagDescription'), default: false}),
     version: flags.boolean({description: messages.getMessage('packageVersionDescription'), default: false}),
     maxversion: flags.boolean({char: 'x', description: messages.getMessage('maxVersionFlagDescription'), default: false})
   };
@@ -59,18 +61,12 @@ export default class Order extends SfdxCommand {
     const builder = new DependencyTreeBuilder<Package2Version>(dependencyApi);
     for (const dependency of dependencies) {
       const versionElements: string[] = dependency.versionNumber.split('\.', 4);
-      if (this.flags.withversion) {
-        if ('LATEST' === versionElements[3]) {
-          const childElement: Package2Version = await dependencyApi.getLatestPackageVersion(project.packageAliases[dependency.package], versionElements[0], versionElements[1], versionElements[2]);
-          rootNode.extendWithSubTree(await builder.buildDependencyTree(childElement));
-        } else {
-          const childElement: Package2Version = await dependencyApi.getPackageVersion(project.packageAliases[dependency.package], versionElements[0], versionElements[1], versionElements[2], versionElements[3]);
-          rootNode.extendWithSubTree(await builder.buildDependencyTree(childElement));
-        }
+      if ('LATEST' === versionElements[3]) {
+        const childElement: Package2Version = await dependencyApi.getLatestPackageVersion(project.packageAliases[dependency.package], versionElements[0], versionElements[1], versionElements[2]);
+        rootNode.extendWithSubTree(await builder.buildDependencyTree(childElement));
       } else {
-        const childElement: Package2Version = {Package2: {Name: dependency.package}, MajorVersion: Number.parseInt(versionElements[0], 10), MinorVersion: Number.parseInt(versionElements[1], 10), PatchVersion: Number.parseInt(versionElements[2], 10), BuildNumber: Number.parseInt(versionElements[3], 10)};
-          // tslint:disable-next-line: no-unused-expression
-        new DependencyTreeNode(childElement, rootNode);
+        const childElement: Package2Version = await dependencyApi.getPackageVersion(project.packageAliases[dependency.package], versionElements[0], versionElements[1], versionElements[2], versionElements[3]);
+        rootNode.extendWithSubTree(await builder.buildDependencyTree(childElement));
       }
     }
     const ordering: OrderingVisitor = new OrderingVisitor(false);

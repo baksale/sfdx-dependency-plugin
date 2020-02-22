@@ -1,4 +1,4 @@
-import { flags, SfdxCommand } from '@salesforce/command';
+import { flags, SfdxCommand, UX } from '@salesforce/command';
 import { Messages } from '@salesforce/core';
 import { AnyJson, JsonMap } from '@salesforce/ts-types';
 import { DependencyTreeBuilder } from 'any-dependency-tree/dist';
@@ -52,18 +52,12 @@ export default class Tree extends SfdxCommand {
     const builder = new DependencyTreeBuilder<Package2Version>(dependencyApi);
     for (const dependency of dependencies) {
       const versionElements: string[] = dependency.versionNumber.split('\.', 4);
-      if (this.flags.withversion) {
-        if ('LATEST' === versionElements[3]) {
-          const childElement: Package2Version = await dependencyApi.getLatestPackageVersion(project.packageAliases[dependency.package], versionElements[0], versionElements[1], versionElements[2]);
-          rootNode.extendWithSubTree(await builder.buildDependencyTree(childElement));
-        } else {
-          const childElement: Package2Version = await dependencyApi.getPackageVersion(project.packageAliases[dependency.package], versionElements[0], versionElements[1], versionElements[2], versionElements[3]);
-          rootNode.extendWithSubTree(await builder.buildDependencyTree(childElement));
-        }
+      if ('LATEST' === versionElements[3]) {
+        const childElement: Package2Version = await dependencyApi.getLatestPackageVersion(project.packageAliases[dependency.package], versionElements[0], versionElements[1], versionElements[2]);
+        rootNode.extendWithSubTree(await builder.buildDependencyTree(childElement));
       } else {
-        const childElement: Package2Version = {Package2: {Name: dependency.package}, MajorVersion: Number.parseInt(versionElements[0], 10), MinorVersion: Number.parseInt(versionElements[1], 10), PatchVersion: Number.parseInt(versionElements[2], 10), BuildNumber: Number.parseInt(versionElements[3], 10)};
-          // tslint:disable-next-line: no-unused-expression
-        new DependencyTreeNode(childElement, rootNode);
+        const childElement: Package2Version = await dependencyApi.getPackageVersion(project.packageAliases[dependency.package], versionElements[0], versionElements[1], versionElements[2], versionElements[3]);
+        rootNode.extendWithSubTree(await builder.buildDependencyTree(childElement));
       }
     }
     const serializer = new DxPackageSerializer(this.flags.withversion, false);
