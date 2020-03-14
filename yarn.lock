@@ -302,10 +302,15 @@
   resolved "https://registry.yarnpkg.com/@sinonjs/text-encoding/-/text-encoding-0.7.1.tgz#8da5c6530915653f3a1f38fd5f101d8c3f8079c5"
   integrity sha512-+iTbntw2IZPb/anVDbypzfQa+ay64MW0Zo8aJ8gZPWMMK6/OubMVb6lUPMagqjOPnmtauXnFCACVl3O7ogjeqQ==
 
-"@types/chai@*", "@types/chai@^4":
+"@types/chai@*":
   version "4.2.4"
   resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.2.4.tgz#8936cffad3c96ec470a2dc26a38c3ba8b9b6f619"
   integrity sha512-7qvf9F9tMTzo0akeswHPGqgUx/gIaJqrOEET/FCD8CFRkSUHlygQiM5yB6OvjrtdxBVLSyw7COJubsFYs0683g==
+
+"@types/chai@^4.2.11":
+  version "4.2.11"
+  resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.2.11.tgz#d3614d6c5f500142358e6ed24e1bf16657536c50"
+  integrity sha512-t7uW6eFafjO+qJ3BIV2gGUyZs27egcNRkUdalkud+Qa3+kg//f129iuOFivHDXQ+vnU3fDXuwgv0cqMCbcE8sw==
 
 "@types/events@*":
   version "3.0.0"
@@ -405,10 +410,10 @@ ansicolors@~0.3.2:
   resolved "https://registry.yarnpkg.com/ansicolors/-/ansicolors-0.3.2.tgz#665597de86a9ffe3aa9bfbe6cae5c6ea426b4979"
   integrity sha1-ZlWX3oap/+Oqm/vmyuXG6kJrSXk=
 
-any-dependency-tree@^1:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/any-dependency-tree/-/any-dependency-tree-1.0.0.tgz#88c9e38fa9129b69e8315f312032329b777508d7"
-  integrity sha512-b9XNSk904CAmW9y2fGPXlm1QFwhyTQOjNoSo2zn6RRLtjIk9Bp3Tt/MXrxHwLfi9O4RxAj5HAtMcpzxdO1Klfg==
+any-dependency-tree@2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/any-dependency-tree/-/any-dependency-tree-2.1.2.tgz#e68618b227593cddb1d8f603ae2d596b72dbe3d7"
+  integrity sha512-wAhkQEAYkGseQ+z0irWtQ+jnk5AXlkBNi3zadcLLv4xVvkpbcl2jTZKiTY+JqLDCiG5FWfqSIzi7uAtgJW08uQ==
 
 append-transform@^1.0.0:
   version "1.0.0"
