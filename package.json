@@ -5,7 +5,7 @@
   "author": "java.rabota@gmail.com",
   "bugs": "https://github.com/baksale/sfdx-dependency-plugin/issues",
   "dependencies": {
-    "@oclif/command": "^1",
+    "@oclif/command": "1.5.19",
     "@oclif/config": "^1",
     "@oclif/errors": "^1",
     "@salesforce/command": "^2",
