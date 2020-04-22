@@ -353,10 +353,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.5.tgz#66103d2eddc543d44a04394abb7be52506d7f290"
   integrity sha512-KEjODidV4XYUlJBF3XdjSH5FWoMCtO0utnhtdLf1AgeuZLOrRbvmU/gaRCVg7ZaQDjVf3l84egiY0mRNe5xE4A==
 
-"@types/node@^12.12.8":
-  version "12.12.8"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.8.tgz#dab418655af39ce2fa99286a0bed21ef8072ac9d"
-  integrity sha512-XLla8N+iyfjvsa0KKV+BP/iGSoTmwxsu5Ci5sM33z9TjohF72DEz95iNvD6pPmemvbQgxAv/909G73gUn8QR7w==
+"@types/node@^13.13.2":
+  version "13.13.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.13.2.tgz#160d82623610db590a64e8ca81784e11117e5a54"
+  integrity sha512-LB2R1Oyhpg8gu4SON/mfforE525+Hi/M1ineICEDftqNVTyFg1aRIeGuTvXAoWHc4nbrFncWtJgMmoyRvuGh7A==
 
 "@types/sinon@*":
   version "7.5.0"
@@ -405,10 +405,10 @@ ansicolors@~0.3.2:
   resolved "https://registry.yarnpkg.com/ansicolors/-/ansicolors-0.3.2.tgz#665597de86a9ffe3aa9bfbe6cae5c6ea426b4979"
   integrity sha1-ZlWX3oap/+Oqm/vmyuXG6kJrSXk=
 
-any-dependency-tree@^1:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/any-dependency-tree/-/any-dependency-tree-1.0.0.tgz#88c9e38fa9129b69e8315f312032329b777508d7"
-  integrity sha512-b9XNSk904CAmW9y2fGPXlm1QFwhyTQOjNoSo2zn6RRLtjIk9Bp3Tt/MXrxHwLfi9O4RxAj5HAtMcpzxdO1Klfg==
+any-dependency-tree@2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/any-dependency-tree/-/any-dependency-tree-2.1.2.tgz#e68618b227593cddb1d8f603ae2d596b72dbe3d7"
+  integrity sha512-wAhkQEAYkGseQ+z0irWtQ+jnk5AXlkBNi3zadcLLv4xVvkpbcl2jTZKiTY+JqLDCiG5FWfqSIzi7uAtgJW08uQ==
 
 append-transform@^1.0.0:
   version "1.0.0"
