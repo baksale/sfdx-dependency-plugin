@@ -11,7 +11,7 @@
     "@salesforce/command": "^2",
     "@salesforce/core": "^2",
     "any-dependency-tree": "2.1.2",
-    "tslib": "^1"
+    "tslib": "^2.0.0"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1",
