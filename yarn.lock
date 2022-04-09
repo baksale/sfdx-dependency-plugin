@@ -405,10 +405,10 @@ ansicolors@~0.3.2:
   resolved "https://registry.yarnpkg.com/ansicolors/-/ansicolors-0.3.2.tgz#665597de86a9ffe3aa9bfbe6cae5c6ea426b4979"
   integrity sha1-ZlWX3oap/+Oqm/vmyuXG6kJrSXk=
 
-any-dependency-tree@^1:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/any-dependency-tree/-/any-dependency-tree-1.0.0.tgz#88c9e38fa9129b69e8315f312032329b777508d7"
-  integrity sha512-b9XNSk904CAmW9y2fGPXlm1QFwhyTQOjNoSo2zn6RRLtjIk9Bp3Tt/MXrxHwLfi9O4RxAj5HAtMcpzxdO1Klfg==
+any-dependency-tree@2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/any-dependency-tree/-/any-dependency-tree-2.1.2.tgz#e68618b227593cddb1d8f603ae2d596b72dbe3d7"
+  integrity sha512-wAhkQEAYkGseQ+z0irWtQ+jnk5AXlkBNi3zadcLLv4xVvkpbcl2jTZKiTY+JqLDCiG5FWfqSIzi7uAtgJW08uQ==
 
 append-transform@^1.0.0:
   version "1.0.0"
@@ -1923,9 +1923,9 @@ mock-stdin@^0.3.1:
   integrity sha1-xlfZZC2QeGQ1xkyl6Zu9TQm9fdM=
 
 moment@^2.10.6:
-  version "2.24.0"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
-  integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
+  version "2.29.2"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.2.tgz#00910c60b20843bcba52d37d58c628b47b1f20e4"
+  integrity sha512-UgzG4rvxYpN15jgCmVJwac49h9ly9NurikMWGPdVxm8GZD6XjkKPxDTjQQ43gtGgnV3X0cAyWDdP2Wexoquifg==
 
 ms@2.1.1:
   version "2.1.1"
