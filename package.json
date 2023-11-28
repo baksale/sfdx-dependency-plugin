@@ -5,11 +5,11 @@
   "author": "java.rabota@gmail.com",
   "bugs": "https://github.com/baksale/sfdx-dependency-plugin/issues",
   "dependencies": {
-    "@oclif/command": "^1",
+    "@oclif/command": "^1.6.0",
     "@oclif/config": "^1",
     "@oclif/errors": "^1",
     "@salesforce/command": "^2",
-    "@salesforce/core": "^2",
+    "@salesforce/core": "^2.36.4",
     "any-dependency-tree": "2.1.2",
     "tslib": "^1"
   },
